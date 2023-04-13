@@ -1,0 +1,13 @@
+@import '../../../scss/mixins/theme-aware.scss';
+@import '../../../scss/constants/fonts.scss';
+@import '../../../scss/mixins/breakpoints.scss';
+
+.footer {
+  @include theme-aware('background', 'background-color');
+  height: calc($font-size-m * 3);
+  width: 100%;
+  @include md {
+    bottom: 0;
+    position: fixed;
+  }
+}

@@ -1,0 +1,6 @@
+@import 'scss/mixins/theme-aware.scss';
+@import 'scss/mixins/breakpoints.scss';
+
+.App {
+  @include theme-aware('background', 'background-color');
+}

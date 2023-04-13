@@ -1,0 +1,15 @@
+@import '../../../scss/constants/fonts.scss';
+
+.header {
+  font-size: $font-size-m;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__theme-button {
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,25 @@
+@import '../../../scss/mixins/theme-aware.scss';
+@import '../../../scss/constants/fonts.scss';
+$header-height: calc($font-size-m * 3);
+$header-vertical-padding: 10px;
+
+.layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.layout-header-container {
+  height: $header-height;
+  padding: $header-vertical-padding 5px;
+  box-sizing: border-box;
+  display: flex;
+  @include theme-aware('color', 'text-color');
+  @include theme-aware('background', 'background-color');
+}
+
+.layout-body-container {
+  padding-top: $header-height;
+}
