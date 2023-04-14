@@ -2,10 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Themes } from '@shared/constants/themes';
 import { useAppTheme } from '@shared/hooks/use-theme';
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, memo } from 'react';
 import s from './header.module.scss';
 import { whiteMoonIcon, sunIcon } from '@shared/font-awesome-icons';
 import FlexContainer from 'components/containers/flex-container';
+import Button from '@ui/button';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
@@ -19,9 +20,9 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
     <FlexContainer ref={ref} className={s.header}>
       <div>Hello</div>
       <div>
-        <a onClick={changeThemeHandler} className={s['header__theme-button']}>
+        <Button as="a" round onClick={changeThemeHandler} className={s['header__theme-button']}>
           <FontAwesomeIcon icon={theme === Themes.light ? whiteMoonIcon : sunIcon} />
-        </a>
+        </Button>
       </div>
     </FlexContainer>
   );
@@ -29,4 +30,4 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
 
 LayoutHeader.displayName = 'LayoutHeader';
 
-export default LayoutHeader;
+export default memo(LayoutHeader);

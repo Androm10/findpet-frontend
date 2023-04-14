@@ -3,11 +3,11 @@
 @import '../../../scss/mixins/breakpoints.scss';
 
 .footer {
-  @include theme-aware('background', 'background-color');
-  height: calc($font-size-m * 3);
+  @include theme-aware('background', 'main-color');
+  height: 100%;
   width: 100%;
-  @include md {
-    bottom: 0;
-    position: fixed;
-  }
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
 }

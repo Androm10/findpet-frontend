@@ -8,6 +8,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), macrosPlugin()],
   resolve: {
-    alias: [{ find: '@shared', replacement: '/src/shared' }],
+    alias: [
+      { find: '@shared', replacement: '/src/shared' },
+      {
+        find: '@ui',
+        replacement: '/src/components/ui',
+      },
+    ],
   },
 });

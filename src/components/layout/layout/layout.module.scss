@@ -1,6 +1,9 @@
 @import '../../../scss/mixins/theme-aware.scss';
 @import '../../../scss/constants/fonts.scss';
+@import '../../../scss/mixins/breakpoints.scss';
+
 $header-height: calc($font-size-m * 3);
+$footer-height: calc($font-size-m * 3);
 $header-vertical-padding: 10px;
 
 .layout {
@@ -12,14 +15,25 @@ $header-vertical-padding: 10px;
 }
 
 .layout-header-container {
+  z-index: 5;
   height: $header-height;
   padding: $header-vertical-padding 5px;
   box-sizing: border-box;
   display: flex;
-  @include theme-aware('color', 'text-color');
-  @include theme-aware('background', 'background-color');
+  @include theme-aware('color', 'text-main-color');
+  @include theme-aware('background', 'main-color');
 }
 
 .layout-body-container {
   padding-top: $header-height;
+  height: calc(100% - $footer-height);
+  position: relative;
+}
+
+.layout-footer-container {
+  height: $footer-height;
+  @include md {
+    bottom: 0;
+    position: fixed;
+  }
 }

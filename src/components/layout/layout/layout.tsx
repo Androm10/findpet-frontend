@@ -4,6 +4,7 @@ import FixedContainer from 'components/containers/fixed-container';
 import LayoutHeader from '../header';
 import LayoutFooter from '../footer';
 import { Outlet } from 'react-router-dom';
+import BaseContainer from 'components/containers/base-container';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -16,8 +17,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         <Outlet />
         {children}
       </div>
-
-      <LayoutFooter />
+      <BaseContainer fullWidth className={s['layout-footer-container']}>
+        <LayoutFooter />
+      </BaseContainer>
     </div>
   );
 };
