@@ -20,8 +20,15 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
     <FlexContainer ref={ref} className={s.header}>
       <div>Hello</div>
       <div>
-        <Button as="a" round onClick={changeThemeHandler} className={s['header__theme-button']}>
-          <FontAwesomeIcon icon={theme === Themes.light ? whiteMoonIcon : sunIcon} />
+        <Button
+          as="a"
+          size="medium"
+          round
+          onClick={changeThemeHandler}
+          className={s['header__theme-button']}
+          data-cy="change-theme-button"
+        >
+          <FontAwesomeIcon size="lg" icon={theme === Themes.light ? whiteMoonIcon : sunIcon} />
         </Button>
       </div>
     </FlexContainer>

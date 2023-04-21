@@ -2,8 +2,8 @@
 @import '../../../scss/constants/fonts.scss';
 @import '../../../scss/mixins/breakpoints.scss';
 
-$header-height: calc($font-size-m * 3);
-$footer-height: calc($font-size-m * 3);
+$header-height: calc($font-size-m * 4);
+$footer-height: calc($font-size-m * 4);
 $header-vertical-padding: 10px;
 
 .layout {
