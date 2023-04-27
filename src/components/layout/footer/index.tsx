@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { routes } from '@shared/constants/routes';
-import { acornIcon, alienIcon, messageIcon, whiteMoonIcon } from '@shared/font-awesome-icons';
+import { devIcon, homeIcon, whiteMoonIcon } from '@shared/font-awesome-icons';
+import { classNames } from '@shared/utils/class-names';
 import Button from '@ui/button';
 import { FC, memo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -12,53 +13,45 @@ export const LayoutFooter: FC = () => {
 
   return (
     <div className={s.footer}>
-      <div>
+      <div
+        className={[
+          s['button-container'],
+          classNames({
+            [s['button-container_active']]: location.pathname === '/',
+          }),
+        ].join(' ')}
+      >
         <Button
           as="button"
           size="medium"
-          disabled={location.pathname === '/page1'}
+          style={{ background: 'transparent' }}
           round
-          onClick={() => navigate(routes.page1)}
+          onClick={() => navigate(routes.home)}
           data-cy="to-page-1-button"
         >
-          <FontAwesomeIcon size="lg" icon={acornIcon} />
+          <FontAwesomeIcon size="lg" icon={homeIcon} />
         </Button>
+        <label>home</label>
       </div>
-      <div>
+      <div
+        className={[
+          s['button-container'],
+          classNames({
+            [s['button-container_active']]: location.pathname === '/dev',
+          }),
+        ].join(' ')}
+      >
         <Button
           as="button"
           size="medium"
-          disabled={location.pathname === '/page2'}
-          round
-          onClick={() => navigate(routes.page2)}
-          data-cy="to-page-2-button"
-        >
-          <FontAwesomeIcon size="lg" icon={alienIcon} />
-        </Button>
-      </div>
-      <div>
-        <Button
-          as="button"
-          size="medium"
-          disabled={location.pathname === '/page3'}
-          round
-          onClick={() => navigate(routes.page3)}
-          data-cy="to-page-3-button"
-        >
-          <FontAwesomeIcon size="lg" icon={messageIcon} />
-        </Button>
-      </div>
-      <div>
-        <Button
-          as="button"
-          size="medium"
-          disabled={location.pathname === '/dev'}
+          style={{ background: 'transparent' }}
           round
           onClick={() => navigate(routes.dev)}
           data-cy="to-dev-button"
         >
-          <FontAwesomeIcon size="lg" icon={whiteMoonIcon} />
+          <FontAwesomeIcon size="lg" icon={devIcon} />
         </Button>
+        <label>dev</label>
       </div>
     </div>
   );

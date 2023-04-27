@@ -18,7 +18,7 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
 
   return (
     <FlexContainer ref={ref} className={s.header}>
-      <div>Hello</div>
+      <div>Put logo here</div>
       <div>
         <Button
           as="a"

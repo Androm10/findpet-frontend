@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { whiteMoonIcon } from '@shared/font-awesome-icons';
+import Avatar from '@ui/avatar';
 import Button from '@ui/button';
 import Input from '@ui/input';
 import Toggle from '@ui/toggle';
@@ -22,6 +23,7 @@ const DevPage: FC = () => {
       </Button>
       <Input placeholder="Write something..." />
       <Toggle text="fdsfsfdf" />
+      <Avatar label="H" />
     </div>
   );
 };
