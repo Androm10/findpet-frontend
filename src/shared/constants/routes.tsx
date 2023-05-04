@@ -1,14 +1,13 @@
 import Layout from 'components/layout/layout/layout';
 import DevPage from 'pages/dev';
 import HomePage from 'pages/home';
+import PetsPage from 'pages/pets';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const routes = {
   home: '/',
   dev: 'dev',
-  page1: 'page1',
-  page2: 'page2',
-  page3: 'page3',
+  pets: 'pets',
 };
 
 export const router = createBrowserRouter([
@@ -23,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: routes.dev,
         element: <DevPage />,
+      },
+      {
+        path: routes.pets,
+        element: <PetsPage />,
       },
     ],
   },

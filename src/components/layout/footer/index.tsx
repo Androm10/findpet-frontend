@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { routes } from '@shared/constants/routes';
-import { devIcon, homeIcon, whiteMoonIcon } from '@shared/font-awesome-icons';
+import { devIcon, homeIcon, petsIcon, whiteMoonIcon } from '@shared/font-awesome-icons';
 import { classNames } from '@shared/utils/class-names';
 import Button from '@ui/button';
 import { FC, memo } from 'react';
@@ -17,7 +17,7 @@ export const LayoutFooter: FC = () => {
         className={[
           s['button-container'],
           classNames({
-            [s['button-container_active']]: location.pathname === '/',
+            [s['button-container_active']]: location.pathname === `${routes.home}`,
           }),
         ].join(' ')}
       >
@@ -37,7 +37,7 @@ export const LayoutFooter: FC = () => {
         className={[
           s['button-container'],
           classNames({
-            [s['button-container_active']]: location.pathname === '/dev',
+            [s['button-container_active']]: location.pathname === `/${routes.dev}`,
           }),
         ].join(' ')}
       >
@@ -52,6 +52,26 @@ export const LayoutFooter: FC = () => {
           <FontAwesomeIcon size="lg" icon={devIcon} />
         </Button>
         <label>dev</label>
+      </div>
+      <div
+        className={[
+          s['button-container'],
+          classNames({
+            [s['button-container_active']]: location.pathname === `/${routes.pets}`,
+          }),
+        ].join(' ')}
+      >
+        <Button
+          as="button"
+          size="medium"
+          style={{ background: 'transparent' }}
+          round
+          onClick={() => navigate(routes.pets)}
+          data-cy="to-pets-button"
+        >
+          <FontAwesomeIcon size="lg" icon={petsIcon} />
+        </Button>
+        <label>pets</label>
       </div>
     </div>
   );
