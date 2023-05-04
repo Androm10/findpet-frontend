@@ -1,4 +1,5 @@
 @import '../../../scss/constants/fonts.scss';
+@import '../../../scss/mixins/theme-aware.scss';
 
 .header {
   font-size: $font-size-m;
@@ -11,5 +12,25 @@
 .header__theme-button {
   &:hover {
     cursor: pointer;
+  }
+}
+
+.header__menu {
+  width: 100%;
+}
+
+.header__menu-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  @include theme-aware-shadow(0, -1px, 0px, 0px, 'shadow-color');
+}
+
+.header__link {
+  text-decoration: none;
+  color: #fff;
+  &:hover {
+    @include theme-aware('color', 'light-color');
   }
 }

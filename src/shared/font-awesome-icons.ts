@@ -5,6 +5,8 @@ export const sunIcon = icon({ name: 'sun' });
 export const homeIcon = icon({ name: 'home' });
 export const devIcon = icon({ name: 'list' });
 export const petsIcon = icon({ name: 'cat' });
+export const burgerIcon = icon({ name: 'bars' });
+export const crossIcon = icon({ name: 'xmark' });
 
 export const catIcon = icon({ name: 'cat' });
 export const dogIcon = icon({ name: 'dog' });

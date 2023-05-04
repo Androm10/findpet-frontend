@@ -18,23 +18,29 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
     <div className={s['animal-card']}>
       <div className={s['animal-card__header']}>
         <Avatar url={photos.length > 0 ? photos[0].url : undefined} label={name[0]} />
-        <div className={s['animal-card__info']}>
-          <label>
-            {name} <FontAwesomeIcon icon={getAnimalTypeIcon(type)} />
-          </label>
-          <label>
-            {sex == 'G' ? 'Девочка' : 'Мальчик'},{age} {age === 1 ? 'год' : age > 4 ? 'лет' : 'года'}
-          </label>
+        <div className={s['animal-card__info-container']}>
+          <div className={s['animal-card__info']}>
+            <label>
+              {name} <FontAwesomeIcon icon={getAnimalTypeIcon(type)} />
+            </label>
+            <label className={s['animal-card__info-params']}>
+              {sex == 'G' ? 'G' : 'M'},{age} {age === 1 ? 'год' : age > 4 ? 'лет' : 'года'}
+            </label>
+          </div>
         </div>
       </div>
       <div className={s['animal-card__photos']}>
         {photos.slice(1, 4).map((photo) => (
-          <img src={photo.url} />
+          <div className={s['animal-card__photo-container']}>
+            <img src={photo.url} />
+          </div>
         ))}
       </div>
       <div className={s['animal-card__description']}>{description}</div>
       <div className={s['animal-card__footer']}>
-        <Button as="button">Take</Button>
+        <Button size="medium" as="button">
+          Take
+        </Button>
       </div>
     </div>
   );
