@@ -1,6 +1,13 @@
-import AnimalCard from 'components/animal/animal-card';
-import { AnimalEntity } from 'core/entities/animal.entity';
 import { FC } from 'react';
+import s from './pets.module.scss';
+import AnimalCard from 'components/animal/animal-card';
+import { AnimalEntity, AnimalTypes } from 'core/entities/animal.entity';
+import Input from '@ui/input';
+import Button from '@ui/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { searchIcon } from '@shared/font-awesome-icons';
+import Select from '@ui/select';
+import SearchOptions from 'components/animal/search-options';
 
 const PetsPage: FC = () => {
   const pets: AnimalEntity[] = [
@@ -95,8 +102,10 @@ const PetsPage: FC = () => {
       sex: 'M',
     },
   ];
+
   return (
-    <div>
+    <div className={s['pet-page']}>
+      <SearchOptions />
       <h1>Pets page</h1>
       <div>
         {pets.map((pet) => (

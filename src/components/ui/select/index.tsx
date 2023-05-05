@@ -12,9 +12,7 @@ const Select = (props: SelectProps) => {
 
   return (
     <select className={s.select} {...other}>
-      {children?.map((child) => (
-        <option>{child}</option>
-      ))}
+      {children}
     </select>
   );
 };

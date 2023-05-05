@@ -1,0 +1,38 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.search-options {
+  width: 100%;
+  border-top: 2px solid;
+  @include theme-aware('border-color', 'shadow-color');
+  @include theme-aware('background', 'main-color');
+  border-radius: 0 0 10px 10px;
+  height: 60px;
+  display: flex;
+  gap: 20px;
+  z-index: 10;
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+
+.search-options__selection {
+  color: #fff;
+  @include theme-aware('background', 'light-color');
+  display: flex;
+  gap: 10px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  outline: 1px solid #fff;
+  padding: 5px 10px;
+  transition: background 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'lighter-color');
+  }
+}
+
+.search-options__buttons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}

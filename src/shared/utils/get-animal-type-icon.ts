@@ -1,5 +1,5 @@
 import { IconName } from '@fortawesome/fontawesome-svg-core';
-import { animalTypeIcons, questionIcon } from '@shared/font-awesome-icons';
+import { animalTypeIcons, circleIcon, questionIcon } from '@shared/font-awesome-icons';
 import { AnimalTypes } from 'core/entities/animal.entity';
 
 export function getAnimalTypeIcon(type: keyof typeof AnimalTypes & IconName) {
@@ -7,6 +7,6 @@ export function getAnimalTypeIcon(type: keyof typeof AnimalTypes & IconName) {
   if (keyName in animalTypeIcons) {
     return animalTypeIcons[keyName as keyof typeof animalTypeIcons];
   } else {
-    return questionIcon;
+    return circleIcon;
   }
 }

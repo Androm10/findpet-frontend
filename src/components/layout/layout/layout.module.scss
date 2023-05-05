@@ -24,6 +24,7 @@ $header-vertical-padding: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   @include theme-aware('color', 'text-main-color');
   @include theme-aware('background', 'main-color');
 }

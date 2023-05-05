@@ -9,14 +9,33 @@
   align-items: center;
 }
 
-.header__theme-button {
-  &:hover {
-    cursor: pointer;
-  }
+.header__theme {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
+  height: 40px;
+  width: fit-content;
 }
 
 .header__menu {
   width: 100%;
+}
+
+.header__search {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.header__input-container {
+  width: 60%;
+
+  input {
+    font-size: $font-size-l;
+  }
 }
 
 .header__menu-item {
@@ -30,6 +49,7 @@
 .header__link {
   text-decoration: none;
   color: #fff;
+  transition: color 0.2s ease;
   &:hover {
     @include theme-aware('color', 'light-color');
   }

@@ -1,0 +1,28 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.menu {
+  width: 300px;
+  @include theme-aware('background', 'main-color');
+}
+
+.menu-item {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 5px 10px;
+  transition: background 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'second-color');
+  }
+}
+
+.menu-item_picked {
+  @include theme-aware('background', 'third-color');
+
+  &:hover {
+    cursor: default;
+    @include theme-aware('background', 'third-color');
+  }
+}
