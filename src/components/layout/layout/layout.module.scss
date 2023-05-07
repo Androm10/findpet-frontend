@@ -4,7 +4,6 @@
 
 $header-height: calc($font-size-m * 4);
 $footer-height: calc($font-size-m * 4);
-$header-vertical-padding: 10px;
 
 .layout {
   width: 100%;
@@ -20,11 +19,10 @@ $header-vertical-padding: 10px;
   z-index: 5;
   min-height: $header-height;
   height: fit-content;
-  padding: $header-vertical-padding 5px;
+  padding: 0 5px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   @include theme-aware('color', 'text-main-color');
   @include theme-aware('background', 'main-color');
 }
@@ -33,12 +31,9 @@ $header-vertical-padding: 10px;
   padding-top: $header-height;
   height: calc(100% - $footer-height);
   position: relative;
+  padding-bottom: 10px;
 }
 
 .layout-footer-container {
   height: $footer-height;
-  @include md {
-    bottom: 0;
-    position: fixed;
-  }
 }

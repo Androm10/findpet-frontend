@@ -1,0 +1,28 @@
+@import '../../../scss/mixins/breakpoints.scss';
+
+.animal-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  @include md {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    & .animal-list__item {
+      flex: 40%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  @include xl {
+    & .animal-list__item {
+      flex: 20%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

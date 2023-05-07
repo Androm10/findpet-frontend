@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { routes } from '@shared/constants/routes';
 import Toggle from '@ui/toggle';
 import Input from '@ui/input';
+import { classNames } from '@shared/utils/class-names';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
@@ -67,36 +68,42 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
           </Button>
         </div>
       </FlexContainer>
-      {isMenu && (
-        <div className={s.header__menu} ref={menuRef}>
-          <div className={s.header__theme}>
-            <Toggle checked={theme === Themes.light} onChange={changeThemeHandler} />
-            <FontAwesomeIcon size="lg" icon={theme === Themes.light ? whiteMoonIcon : sunIcon} />
-          </div>
-          <div className={s.header__search}>
-            <div className={s['header__input-container']}>
-              <Input placeholder="Search pets..." fullWidth>
-                <FontAwesomeIcon icon={searchIcon} />
-              </Input>
-            </div>
-          </div>
-          <Link to={routes.home} className={s.header__link}>
-            <div className={s['header__menu-item']}>
-              <FontAwesomeIcon icon={homeIcon} /> HOME
-            </div>
-          </Link>
-          <Link to={routes.dev} className={s.header__link}>
-            <div className={s['header__menu-item']}>
-              <FontAwesomeIcon icon={devIcon} /> DEV
-            </div>
-          </Link>
-          <Link to={routes.pets} className={s.header__link}>
-            <div className={s['header__menu-item']}>
-              <FontAwesomeIcon icon={petsIcon} /> PETS
-            </div>
-          </Link>
+      <div
+        className={[
+          s.header__menu,
+          classNames({
+            [s.header__menu_active]: isMenu,
+          }),
+        ].join(' ')}
+        ref={menuRef}
+      >
+        <div className={s.header__theme}>
+          <Toggle checked={theme === Themes.light} onChange={changeThemeHandler} />
+          <FontAwesomeIcon size="lg" icon={theme === Themes.light ? whiteMoonIcon : sunIcon} />
         </div>
-      )}
+        <div className={s.header__search}>
+          <div className={s['header__input-container']}>
+            <Input placeholder="Search pets..." fullWidth>
+              <FontAwesomeIcon icon={searchIcon} />
+            </Input>
+          </div>
+        </div>
+        <Link to={routes.home} className={s.header__link}>
+          <div className={s['header__menu-item']}>
+            <FontAwesomeIcon icon={homeIcon} /> HOME
+          </div>
+        </Link>
+        <Link to={routes.dev} className={s.header__link}>
+          <div className={s['header__menu-item']}>
+            <FontAwesomeIcon icon={devIcon} /> DEV
+          </div>
+        </Link>
+        <Link to={routes.pets} className={s.header__link}>
+          <div className={s['header__menu-item']}>
+            <FontAwesomeIcon icon={petsIcon} /> PETS
+          </div>
+        </Link>
+      </div>
     </>
   );
 });

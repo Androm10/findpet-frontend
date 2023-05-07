@@ -1,17 +1,22 @@
 @import '../../../scss/mixins/theme-aware.scss';
 
-.search-options {
+.search-options__basic-options {
   width: 100%;
-  border-top: 2px solid;
-  @include theme-aware('border-color', 'shadow-color');
-  @include theme-aware('background', 'main-color');
-  border-radius: 0 0 10px 10px;
   height: 60px;
   display: flex;
   gap: 20px;
   z-index: 10;
   padding: 10px 5px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.search-options {
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+  border-top: 2px solid;
+  @include theme-aware('border-color', 'shadow-color');
+  @include theme-aware('background', 'main-color');
 }
 
 .search-options__selection {
@@ -35,4 +40,63 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
+}
+
+.search-options__more-options {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.5s ease;
+  color: #fff;
+}
+
+.search-options__more-options_active {
+  height: 100px;
+}
+
+.search-options__more-button {
+  border-top: 1px solid;
+  @include theme-aware('border-color', 'shadow-color');
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 20px;
+  border-radius: 0 0 10px 10px;
+
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'second-color');
+
+    &::after {
+      border-top: 12px solid #fff;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid #a9a9a9;
+    box-sizing: border-box;
+    border-bottom: 0;
+  }
+}
+
+.search-options__more-button_active {
+  &::after {
+    border-top: 0;
+    border-bottom: 12px solid #a9a9a9;
+  }
+
+  &:hover {
+    &::after {
+      border-bottom: 12px solid #fff;
+      border-top: 0;
+    }
+  }
 }

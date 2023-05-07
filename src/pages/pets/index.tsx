@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { searchIcon } from '@shared/font-awesome-icons';
 import Select from '@ui/select';
 import SearchOptions from 'components/animal/search-options';
+import AnimalList from 'components/animal/animal-list';
 
 const PetsPage: FC = () => {
   const pets: AnimalEntity[] = [
@@ -42,7 +43,7 @@ const PetsPage: FC = () => {
       sex: 'M',
     },
     {
-      id: 1,
+      id: 2,
       name: 'vasya',
       type: 'cat',
       description: 'a very lovely cat',
@@ -72,7 +73,7 @@ const PetsPage: FC = () => {
       sex: 'M',
     },
     {
-      id: 1,
+      id: 3,
       name: 'vasya',
       type: 'cat',
       description: 'a very lovely cat',
@@ -106,12 +107,8 @@ const PetsPage: FC = () => {
   return (
     <div className={s['pet-page']}>
       <SearchOptions />
-      <h1>Pets page</h1>
-      <div>
-        {pets.map((pet) => (
-          <AnimalCard animal={pet} />
-        ))}
-      </div>
+      <h1>Find a pet for yourself!</h1>
+      <AnimalList animals={pets} />
     </div>
   );
 };
