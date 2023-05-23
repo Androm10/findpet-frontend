@@ -1,0 +1,102 @@
+@import '../../../scss/mixins/theme-aware.scss';
+@import '../../../scss/constants/fonts.scss';
+
+$hr-padding: 15px;
+$vr-padding: 15px;
+$avatar-info-gap: 10px;
+
+.shelter-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: $vr-padding $hr-padding;
+  gap: $avatar-info-gap;
+  min-width: 500px;
+  max-width: 600px;
+  @include theme-aware('background', 'second-color');
+  color: #fff;
+
+  &__location,
+  &__phone,
+  &__email {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    justify-content: flex-start;
+    svg {
+      flex: 0 0 10%;
+    }
+  }
+
+  &__email {
+    font-size: $font-size-s;
+  }
+
+  &__name {
+    @include theme-aware-shadow(0, 2px, 0px, 0px, 'shadow-color');
+    margin-left: -($avatar-info-gap);
+    padding-left: $avatar-info-gap;
+    margin-right: -($hr-padding);
+    svg {
+      margin-left: 8px;
+    }
+  }
+}
+
+.shelter-card__photos {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.shelter-card__photo {
+  flex-basis: 50%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: inline-block;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shelter-card__header {
+  display: flex;
+  gap: 10px;
+}
+
+.shelter-card__avatar {
+  margin-left: -($hr-padding);
+  margin-top: -($vr-padding);
+
+  flex-basis: 50%;
+  height: 300px;
+
+  flex-shrink: 0;
+  img {
+    border-top-left-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shelter-card__info {
+  flex-basis: 50%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-s;
+  gap: 20px;
+}
+
+.shelter-card__body {
+}
+
+.shelter-card__buttons {
+  margin-top: 20px;
+  float: right;
+}

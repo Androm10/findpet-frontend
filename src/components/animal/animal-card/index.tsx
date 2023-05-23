@@ -1,9 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { routes } from '@shared/constants/routes';
 import { getAnimalTypeIcon } from '@shared/utils/get-animal-type-icon';
 import Avatar from '@ui/avatar';
 import Button from '@ui/button';
 import { AnimalEntity } from 'core/entities/animal.entity';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import s from './animal-card.module.scss';
 
 interface AnimalCardProps {
@@ -24,7 +26,7 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
               {name} <FontAwesomeIcon icon={getAnimalTypeIcon(type)} />
             </label>
             <label className={s['animal-card__info-params']}>
-              {sex == 'G' ? 'G' : 'M'},{age} {age === 1 ? 'год' : age > 4 ? 'лет' : 'года'}
+              {sex == 'G' ? 'G' : 'M'}, {age} {age === 1 ? 'год' : age > 4 ? 'лет' : 'года'}
             </label>
           </div>
         </div>
@@ -38,9 +40,11 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
       </div>
       <div className={s['animal-card__description']}>{description}</div>
       <div className={s['animal-card__footer']}>
-        <Button size="medium" as="button">
-          Take
-        </Button>
+        <Link to={'/' + routes.animal + animal.id}>
+          <Button size="medium" as="button">
+            Take
+          </Button>
+        </Link>
       </div>
     </div>
   );

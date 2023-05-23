@@ -13,6 +13,7 @@ import {
   petsIcon,
   devIcon,
   searchIcon,
+  sheltersIcon,
 } from '@shared/font-awesome-icons';
 import FlexContainer from 'components/containers/flex-container';
 import Button from '@ui/button';
@@ -21,6 +22,7 @@ import { routes } from '@shared/constants/routes';
 import Toggle from '@ui/toggle';
 import Input from '@ui/input';
 import { classNames } from '@shared/utils/class-names';
+import logo from 'assets/images/logo.png';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
@@ -54,7 +56,9 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
   return (
     <>
       <FlexContainer ref={ref} className={s.header}>
-        <div>Put logo here</div>
+        <div>
+          <img src={logo} height="50" />
+        </div>
         <div>
           <Button
             as="a"
@@ -101,6 +105,11 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
         <Link to={routes.pets} className={s.header__link}>
           <div className={s['header__menu-item']}>
             <FontAwesomeIcon icon={petsIcon} /> PETS
+          </div>
+        </Link>
+        <Link to={routes.shelters} className={s.header__link}>
+          <div className={s['header__menu-item']}>
+            <FontAwesomeIcon icon={sheltersIcon} /> SHELTERS
           </div>
         </Link>
       </div>

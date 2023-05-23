@@ -1,0 +1,29 @@
+@import '../../../scss/mixins/breakpoints.scss';
+
+.shelter-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  @include md {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.shelter-list__item {
+  @include md {
+    flex: 40%;
+    display: flex;
+    justify-content: center;
+  }
+
+  @include xl {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -10,6 +10,7 @@ $themes: (
     lighter-color: #6bd3d3,
     shadow-color: #1d8989,
     placeholder-color: #dfdfdf,
+    second-color-filter: invert(27%) sepia(96%) saturate(3030%) hue-rotate(164deg) brightness(87%) contrast(83%),
   ),
   dark: (
     text-main-color: #ebeef7,
@@ -22,5 +23,6 @@ $themes: (
     lighter-color: #8d6dd7,
     shadow-color: #350f8e,
     placeholder-color: #dadada,
+    second-color-filter: invert(16%) sepia(46%) saturate(3522%) hue-rotate(247deg) brightness(88%) contrast(91%),
   ),
 );

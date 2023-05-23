@@ -3,7 +3,7 @@
 @import '../../../scss/mixins/breakpoints.scss';
 
 $header-height: calc($font-size-m * 4);
-$footer-height: calc($font-size-m * 4);
+$footer-height: calc($font-size-m * 6);
 
 .layout {
   width: 100%;
@@ -29,11 +29,11 @@ $footer-height: calc($font-size-m * 4);
 
 .layout-body-container {
   padding-top: $header-height;
-  height: calc(100% - $footer-height);
+  height: 100%;
   position: relative;
   padding-bottom: 10px;
 }
 
 .layout-footer-container {
-  height: $footer-height;
+  height: auto;
 }
