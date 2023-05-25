@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '@shared/constants/api';
 import { UserEntity } from 'core/entities/user.entity';
+import { userActions } from '../slices/user.slice';
 import customBaseQuery from './base-query';
 
 export const userApi = createApi({
@@ -8,6 +9,16 @@ export const userApi = createApi({
   baseQuery: customBaseQuery,
   tagTypes: ['User'],
   endpoints: (builder) => ({
+    getMe: builder.query<UserEntity, void>({
+      query: () => `user/profile`,
+      onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(userActions.setUser(data));
+        } catch (error) {}
+      },
+    }),
+
     getUser: builder.query<UserEntity, number>({
       query: (id) => `user/${id}`,
       providesTags: ['User'],
@@ -43,6 +54,7 @@ export const userApi = createApi({
 });
 
 export const {
+  useGetMeQuery,
   useGetUsersQuery,
   useGetUserQuery,
   useDeleteUserMutation,

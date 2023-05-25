@@ -23,11 +23,16 @@ import Toggle from '@ui/toggle';
 import Input from '@ui/input';
 import { classNames } from '@shared/utils/class-names';
 import logo from 'assets/images/logo.png';
+import { useAppSelector } from '@shared/store';
+import Avatar from '@ui/avatar';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
   const [isMenu, setMenu] = useState(false);
+  const { user } = useAppSelector((state) => state.userReducer);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  console.log(user);
 
   const changeThemeHandler = () => {
     const newTheme = theme === Themes.light ? Themes.dark : Themes.light;
@@ -59,7 +64,41 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
         <div>
           <img src={logo} height="50" />
         </div>
-        <div>
+
+        <nav className={s['header__navigation']}>
+          <Link to={routes.pets} className={s.header__link}>
+            <div>
+              <FontAwesomeIcon icon={petsIcon} /> PETS
+            </div>
+          </Link>
+          <Link to={routes.shelters} className={s.header__link}>
+            <div>
+              <FontAwesomeIcon icon={sheltersIcon} /> SHELTERS
+            </div>
+          </Link>
+          <div className={s['header__input-container']}>
+            <Input placeholder="Search pets..." fullWidth>
+              <FontAwesomeIcon icon={searchIcon} />
+            </Input>
+          </div>
+          <Button
+            as="a"
+            size="medium"
+            round
+            onClick={changeThemeHandler}
+            className={s['header__theme-button']}
+            data-cy="burger-button"
+          >
+            <FontAwesomeIcon size="lg" icon={theme === Themes.light ? whiteMoonIcon : sunIcon} />
+          </Button>
+          {!!user && (
+            <div>
+              {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />{' '}
+            </div>
+          )}
+        </nav>
+
+        <div className={s['header__menu-button']}>
           <Button
             as="a"
             size="medium"

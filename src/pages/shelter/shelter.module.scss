@@ -90,12 +90,22 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
   * {
-    flex: 30%;
+    flex: 80%;
     flex-grow: 0;
   }
 
+  @include md {
+    justify-content: unset;
+    * {
+      flex: 30%;
+      flex-grow: 0;
+    }
+  }
+
   @include lg {
+    justify-content: center;
     * {
       flex: 20%;
       flex-grow: 0;
@@ -106,6 +116,11 @@
 .shelter-page__animals-view {
   overflow-y: scroll;
   height: 400px;
+  outline: 5px solid;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  @include theme-aware('outline-color', 'light-color');
 }
 
 .shelter-page__map {

@@ -1,7 +1,12 @@
+import AnimalForm from 'components/animal/animal-form';
 import { FC } from 'react';
 
 const CreateAnimalPage: FC = () => {
-  return <></>;
+  return (
+    <>
+      <AnimalForm />
+    </>
+  );
 };
 
 CreateAnimalPage.displayName = 'CreateAnimalPage';

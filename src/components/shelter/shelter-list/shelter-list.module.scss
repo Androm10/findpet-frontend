@@ -23,6 +23,7 @@
 
   @include xl {
     flex: 20%;
+    flex-grow: 0;
     display: flex;
     justify-content: center;
   }

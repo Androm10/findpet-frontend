@@ -5,6 +5,7 @@ import CreateAnimalPage from 'pages/create-animal';
 import CreateShelterPage from 'pages/create-shelter';
 import DevPage from 'pages/dev';
 import HomePage from 'pages/home';
+import LoginPage from 'pages/login';
 import PetsPage from 'pages/pets';
 import ShelterPage from 'pages/shelter';
 import SheltersPage from 'pages/shelters';
@@ -19,9 +20,15 @@ export const routes = {
   shelter: 'shelter/',
   createShelter: 'shelter-create/',
   shelters: 'shelters',
+  login: 'login',
+  signup: 'signup',
 };
 
 export const router = createBrowserRouter([
+  {
+    path: routes.login,
+    element: <LoginPage />,
+  },
   {
     path: routes.home,
     element: <Layout />,

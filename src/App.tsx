@@ -1,11 +1,12 @@
 import s from './App.module.scss';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '@shared/constants/routes';
+import { useGetMeQuery } from '@shared/store/api/user.api';
 
 function App() {
-  return (
-    <div className={s.App}>
-      <button onClick={() => {}}>CLick</button>
-    </div>
-  );
+  useGetMeQuery();
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

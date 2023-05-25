@@ -1,0 +1,200 @@
+@import '../../../scss/constants/fonts.scss';
+@import '../../../scss/mixins/theme-aware.scss';
+@import '../../../scss/mixins/breakpoints.scss';
+
+.animal-form {
+  padding: 5%;
+}
+
+.animal-form__info {
+  display: flex;
+  flex-direction: column;
+  @include md {
+    flex-direction: row;
+  }
+  gap: 40px;
+}
+
+.animal-form__photos {
+  display: flex;
+  flex: 50%;
+
+  @include lg {
+    flex: 40%;
+    flex-grow: 0;
+  }
+
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.animal-form__avatar {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  outline: 5px solid;
+  @include theme-aware('outline-color', 'light-color');
+  @include theme-aware('color', 'light-color');
+  border-radius: 20px;
+
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('outline-color', 'lighter-color');
+    @include theme-aware('color', 'lighter-color');
+  }
+
+  overflow: hidden;
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.animal-form__other-photos {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.animal-form__photo {
+  flex: 30%;
+  border-radius: 10px;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.animal-form__props {
+  & > div + div {
+    margin-top: 20px;
+  }
+}
+
+.animal-form__selections {
+  display: flex;
+  gap: 20px;
+}
+
+.animal-form__prop {
+  display: flex;
+  flex-direction: column;
+  label {
+    padding: 5px 0;
+  }
+  font-size: $font-size-l;
+}
+
+.animal-form__prop-name {
+  font-size: $font-size-m;
+}
+
+.animal-form__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.animal-form__contact-info {
+  div + div {
+    margin-top: 20px;
+  }
+}
+
+.animal-form__animals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  * {
+    flex: 30%;
+    flex-grow: 0;
+  }
+
+  @include lg {
+    * {
+      flex: 20%;
+      flex-grow: 0;
+    }
+  }
+}
+
+.animal-form__input {
+  font-size: $font-size-m;
+  height: 40px;
+  width: 300px;
+  color-scheme: dark;
+}
+
+.animal-form__animals-view {
+  overflow-y: scroll;
+  height: 400px;
+}
+
+.animal-form__map {
+  @include md {
+    width: 60%;
+  }
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.animal-form__more-photos {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  outline: 5px solid;
+  @include theme-aware('outline-color', 'light-color');
+  @include theme-aware('color', 'light-color');
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.animal-form__more-photo {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  position: relative;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.animal-form__more-photo-remove {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+
+.animal-form__more-photos-input {
+  border-radius: 20px;
+  width: 300px;
+  @include theme-aware('background', 'light-color');
+  color: #fff;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'lighter-color');
+  }
+
+  overflow: hidden;
+}
+
+.animal-form__buttons {
+  margin-top: 40px;
+}
