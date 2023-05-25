@@ -6,12 +6,13 @@ interface InputOwnProps {
   fullWidth?: boolean;
   label?: string;
   children?: ReactNode;
+  htmlId?: string;
 }
 
 type InputProps = InputOwnProps & Omit<InputHTMLAttributes<HTMLInputElement>, keyof InputOwnProps>;
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
-  const { fullWidth = false, label, children, ...other } = props;
+  const { fullWidth = false, label, children, htmlId, className, ...other } = props;
   const id = useId();
 
   return (
@@ -21,14 +22,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref: 
         classNames({
           [s['input_full-width']]: fullWidth,
         }),
+        className,
       ].join(' ')}
     >
       {!!label && (
-        <label className={s.input__label} htmlFor={id}>
+        <label className={s.input__label} htmlFor={htmlId || id}>
           {label}
         </label>
       )}
-      <input {...other} id={id} className={s.input__form} ref={ref} />
+      <input {...other} id={htmlId || id} className={s.input__form} ref={ref} />
       {children}
     </div>
   );

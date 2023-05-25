@@ -19,7 +19,7 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
   return (
     <div className={s['animal-card']}>
       <div className={s['animal-card__header']}>
-        <Avatar url={photos.length > 0 ? photos[0].url : undefined} label={name[0]} />
+        <Avatar url={photos && photos.length > 0 ? photos[0].url : undefined} label={name[0]} />
         <div className={s['animal-card__info-container']}>
           <div className={s['animal-card__info']}>
             <label>
@@ -32,11 +32,12 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
         </div>
       </div>
       <div className={s['animal-card__photos']}>
-        {photos.slice(1, 4).map((photo) => (
-          <div className={s['animal-card__photo-container']}>
-            <img src={photo.url} />
-          </div>
-        ))}
+        {photos &&
+          photos.slice(1, 4).map((photo) => (
+            <div className={s['animal-card__photo-container']}>
+              <img src={photo.url} />
+            </div>
+          ))}
       </div>
       <div className={s['animal-card__description']}>{description}</div>
       <div className={s['animal-card__footer']}>

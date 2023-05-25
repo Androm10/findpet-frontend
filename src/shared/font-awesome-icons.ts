@@ -19,6 +19,8 @@ export const checkIcon = icon({ name: 'check' });
 export const phoneIcon = icon({ name: 'phone' });
 export const emailIcon = icon({ name: 'envelope' });
 export const locationIcon = icon({ name: 'map-location-dot' });
+export const internetIcon = icon({ name: 'globe' });
+export const cameraIcon = icon({ name: 'camera' });
 
 export const marsIcon = icon({ name: 'mars' });
 export const venusIcon = icon({ name: 'venus' });

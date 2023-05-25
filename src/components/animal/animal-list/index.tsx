@@ -9,6 +9,7 @@ interface AnimalListProps {
 
 const AnimalList: FC<AnimalListProps> = (props: AnimalListProps) => {
   const { animals } = props;
+  console.log(animals);
 
   return (
     <div className={s['animal-list']}>

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '@shared/constants/api';
 import { UserEntity } from 'core/entities/user.entity';
+import customBaseQuery from './base-query';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: customBaseQuery,
   tagTypes: ['User'],
   endpoints: (builder) => ({
     getUser: builder.query<UserEntity, number>({

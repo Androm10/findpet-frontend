@@ -1,0 +1,41 @@
+@import '../../../scss/mixins/theme-aware.scss';
+@import '../../../scss/constants/fonts.scss';
+
+.animal-mini-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  gap: 10px;
+  width: 100%;
+  color: #fff;
+  position: relative;
+}
+
+.animal-mini-card__photo {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  img {
+    opacity: 0.6;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.animal-mini-card__info-container {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  bottom: 15%;
+  font-size: $font-size-l;
+  box-shadow: inset 0px 0px 100px 1px #373737;
+}
+
+.animal-mini-card__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}

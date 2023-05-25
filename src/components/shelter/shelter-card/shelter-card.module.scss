@@ -1,5 +1,6 @@
 @import '../../../scss/mixins/theme-aware.scss';
 @import '../../../scss/constants/fonts.scss';
+@import '../../../scss/mixins/breakpoints.scss';
 
 $hr-padding: 15px;
 $vr-padding: 15px;
@@ -11,7 +12,7 @@ $avatar-info-gap: 10px;
   border-radius: 10px;
   padding: $vr-padding $hr-padding;
   gap: $avatar-info-gap;
-  min-width: 500px;
+  min-width: 300px;
   max-width: 600px;
   @include theme-aware('background', 'second-color');
   color: #fff;
@@ -21,7 +22,7 @@ $avatar-info-gap: 10px;
   &__email {
     display: flex;
     width: 100%;
-    gap: 20px;
+    gap: 10px;
     justify-content: flex-start;
     svg {
       flex: 0 0 10%;
@@ -89,7 +90,10 @@ $avatar-info-gap: 10px;
   max-width: 50%;
   display: flex;
   flex-direction: column;
-  font-size: $font-size-s;
+  font-size: $font-size-m;
+  @include md {
+    font-size: $font-size-s;
+  }
   gap: 20px;
 }
 

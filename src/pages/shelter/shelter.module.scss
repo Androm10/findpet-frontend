@@ -1,0 +1,119 @@
+@import '../../scss/constants/fonts.scss';
+@import '../../scss/mixins/theme-aware.scss';
+@import '../../scss/mixins/breakpoints.scss';
+
+.shelter-page {
+  padding: 5%;
+}
+
+.shelter-page__info {
+  display: flex;
+  flex-direction: column;
+  @include md {
+    flex-direction: row;
+  }
+  gap: 40px;
+}
+
+.shelter-page__photos {
+  display: flex;
+  flex: 50%;
+
+  @include lg {
+    flex: 40%;
+    flex-grow: 0;
+  }
+
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.shelter-page__avatar {
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shelter-page__other-photos {
+  display: flex;
+  gap: 10px;
+}
+
+.shelter-page__photo {
+  flex: 30%;
+  border-radius: 10px;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shelter-page__props {
+  div + div {
+    margin-top: 20px;
+  }
+}
+
+.shelter-page__prop {
+  display: flex;
+  flex-direction: column;
+  label {
+    padding: 5px 0;
+  }
+  font-size: $font-size-l;
+}
+
+.shelter-page__prop-name {
+  font-size: $font-size-m;
+  @include theme-aware('color', 'text-second-color');
+}
+
+.shelter-page__contact {
+  display: flex;
+  gap: 20px;
+}
+
+.shelter-page__contact-info {
+  div + div {
+    margin-top: 10px;
+  }
+}
+
+.shelter-page__animals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  * {
+    flex: 30%;
+    flex-grow: 0;
+  }
+
+  @include lg {
+    * {
+      flex: 20%;
+      flex-grow: 0;
+    }
+  }
+}
+
+.shelter-page__animals-view {
+  overflow-y: scroll;
+  height: 400px;
+}
+
+.shelter-page__map {
+  @include md {
+    width: 60%;
+  }
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
