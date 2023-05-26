@@ -11,6 +11,8 @@ import { useGetAnimalQuery } from '@shared/store/api/animal.api';
 import { ShelterEntity } from 'core/entities/shelter.entity';
 import Spinner from '@ui/spinner';
 import { useLazyGetShelterQuery } from '@shared/store/api/shelter.api';
+import { YANDEX_API_KEY } from '@shared/constants/api';
+import { addressByCoords } from '@shared/utils/address-by-coords';
 
 const AnimalPage: FC = () => {
   const { id } = useParams();
@@ -29,6 +31,7 @@ const AnimalPage: FC = () => {
 
   const [animal, setAnimal] = useState<AnimalEntity | undefined>(animalData);
   const [shelter, setShelter] = useState<ShelterEntity | undefined>(shelterData);
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
     if (isAnimalSuccess && animalData) {
@@ -42,6 +45,7 @@ const AnimalPage: FC = () => {
   useEffect(() => {
     if (isShelterSuccess && shelterData) {
       setShelter(shelterData);
+      addressByCoords(shelterData.coords).then(setAddress);
     }
   }, [isShelterLoading, isShelterFetching]);
 
@@ -50,57 +54,6 @@ const AnimalPage: FC = () => {
   }
 
   if (!animal || !shelter) return null;
-  // const animal = {
-  //   id: 1,
-  //   name: 'vasya',
-  //   type: 'cat' as keyof typeof AnimalTypes,
-  //   description:
-  //     'a very lovely cat Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, corrupti! Explicabo eum repellendus vitae vero qui harum ea ducimus dolor quasi. Aliquid et accusantium ullam, voluptatum eaque quis esse temporibus?',
-  //   photos: [
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //     {
-  //       name: 'fsf.png',
-  //       url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //     },
-  //   ],
-  //   age: 2,
-  //   sex: 'M',
-  // };
-
-  // const shelter = {
-  //   name: "Aleksandrov's pets",
-  //   address: 'Washington D.C., 43 street, 24 d',
-  //   contactPhone: '+992-232-323-22',
-  //   contactEmail: 'tete@gmail.com',
-  //   contactUrl: 'http://example.com',
-  //   coords: {
-  //     longitude: 12,
-  //     latitude: 12,
-  //   },
-  // };
 
   return (
     <div className={s['animal-page']}>
@@ -127,7 +80,7 @@ const AnimalPage: FC = () => {
             <div>
               <div className={s['animal-page__shelter-data']}>
                 <FontAwesomeIcon icon={locationIcon} />
-                <label>YOUR ADDRESS</label>
+                <label>{address}</label>
               </div>
               {!!shelter.contactPhone && (
                 <div className={s['animal-page__shelter-data']}>
@@ -156,9 +109,9 @@ const AnimalPage: FC = () => {
           </div>
           <div className={s['animal-page__shelter']}>
             <div className={s['animal-page__shelter-name']}>{shelter.name}</div>
-            <div>YOUR ADDRESS</div>
+            <div>{address}</div>
             <div className={s['animal-page__map']}>
-              <YMaps>
+              <YMaps query={{ apikey: YANDEX_API_KEY }}>
                 <Map
                   width="100%"
                   height="400px"

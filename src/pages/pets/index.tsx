@@ -7,21 +7,19 @@ import AnimalList from 'components/animal/animal-list';
 import { useGetAnimalsQuery } from '@shared/store/api/animal.api';
 import Spinner from '@ui/spinner';
 import { useAppSelector } from '@shared/hooks/app-selector.hook';
+import { useDebounce } from '@shared/hooks/use-debounce.hook';
 
 const PetsPage: FC = () => {
   const [page, setPage] = useState(1);
   const { name, sex, type } = useAppSelector((state) => state.animalsFilterReducer);
 
   const [args, setArgs] = useState<any>({});
-  const timeoutRef = useRef<number>();
+  const debouncedSetArgs = useDebounce(setArgs, 1000);
 
   const { data, isLoading, isFetching } = useGetAnimalsQuery(args);
 
   useEffect(() => {
-    if (timeoutRef.current) {
-      window.clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = window.setTimeout(() => setArgs({ page, filter: { name, sex, type } }), 500);
+    debouncedSetArgs({ page, filter: { name, sex, type } });
   }, [page, name, sex, type]);
 
   return (

@@ -1,5 +1,5 @@
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
-import { FC, useId, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import s from './shelter.module.scss';
 import {
@@ -17,131 +17,12 @@ import { AnimalEntity } from 'core/entities/animal.entity';
 import { routes } from '@shared/constants/routes';
 import Input from '@ui/input';
 import Button from '@ui/button';
+import { YANDEX_API_KEY } from '@shared/constants/api';
+import { coordsByAddress } from '@shared/utils/coords-by-address';
+import { useDebounce } from '@shared/hooks/use-debounce.hook';
+import { Coords } from 'core/types/coords.type';
 
 const ShelterForm: FC = () => {
-  const animals: AnimalEntity[] = [
-    {
-      id: 1,
-      name: 'vasya',
-      type: 'cat',
-      description: 'a very lovely cat',
-      photos: [
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-      ],
-      age: 2,
-      sex: 'M',
-    },
-    {
-      id: 2,
-      name: 'vasya',
-      type: 'cat',
-      description: 'a very lovely cat',
-      photos: [
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-      ],
-      age: 2,
-      sex: 'M',
-    },
-    {
-      id: 3,
-      name: 'vasya',
-      type: 'cat',
-      description: 'a very lovely cat',
-      photos: [
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-      ],
-      age: 2,
-      sex: 'M',
-    },
-    {
-      id: 4,
-      name: 'vasya',
-      type: 'cat',
-      description: 'a very lovely cat',
-      photos: [
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-        {
-          name: 'fsf.png',
-          url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-        },
-      ],
-      age: 2,
-      sex: 'M',
-    },
-  ];
-
   const shelter = {
     id: 1,
     name: 'Pet home',
@@ -203,13 +84,26 @@ const ShelterForm: FC = () => {
   const photoInputId = useId();
   const [avatar, setAvatar] = useState();
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [address, setAddress] = useState('');
+  const [coords, setCoords] = useState<Coords>({ longitude: 10, latitude: 10 });
+
+  const fetchAddress = async () => {
+    const result = await coordsByAddress(address);
+    setCoords(result);
+  };
+
+  const debouncedFetchAddress = useDebounce(fetchAddress, 1000);
+
+  useEffect(() => {
+    if (!address) return;
+    debouncedFetchAddress();
+  }, [address]);
 
   return (
     <div className={s['shelter-form']}>
       <div className={s['shelter-form__info']}>
         <div className={s['shelter-form__photos']}>
           <label htmlFor={photoInputId} className={s['shelter-form__avatar']}>
-            {/* <img src={shelter.photos[0].url} /> */}
             {avatarUrl ? <img src={avatarUrl} /> : <FontAwesomeIcon icon={cameraIcon} size="10x" />}
           </label>
           <div className={s['shelter-form__other-photos']}>
@@ -265,13 +159,19 @@ const ShelterForm: FC = () => {
             </div>
             <div className={s['shelter-form__map']}>
               <label>Address</label>
-              <YMaps>
+              <Input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className={s['shelter-form__input']}
+              />
+              <YMaps query={{ apikey: YANDEX_API_KEY }}>
                 <Map
                   width="100%"
                   height="400px"
-                  defaultState={{ center: [shelter.coords.longitude, shelter.coords.latitude], zoom: 9 }}
+                  state={{ center: [coords.longitude, coords.latitude], zoom: 12 }}
+                  defaultState={{ center: [coords.longitude, coords.latitude], zoom: 9 }}
                 >
-                  <Placemark geometry={[shelter.coords.longitude, shelter.coords.latitude]} />
+                  {coords && <Placemark geometry={[coords.longitude, coords.latitude]} />}
                 </Map>
               </YMaps>
             </div>
