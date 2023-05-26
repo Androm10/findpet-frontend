@@ -1,18 +1,19 @@
 import { FC, useState } from 'react';
 import s from './animal-sex-input.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { marsIcon, venusIcon } from '@shared/font-awesome-icons';
+import { circleIcon, marsIcon, venusIcon } from '@shared/font-awesome-icons';
 import FloatingMenu from '@ui/floating-menu';
 import Menu from '@ui/menu';
 
 interface AnimalSexInputProps {
-  value: 'M' | 'G';
-  setValue: (value: 'M' | 'G') => void;
+  value: 'M' | 'G' | null;
+  setValue: (value: 'M' | 'G' | null) => void;
 }
 
 const sexMenuItems = [
   { name: 'Boy', value: 'M', icon: marsIcon },
   { name: 'Girl', value: 'G', icon: venusIcon },
+  { name: 'Any', value: null, icon: circleIcon },
 ];
 
 const AnimalSexInput: FC<AnimalSexInputProps> = (props: AnimalSexInputProps) => {
@@ -20,7 +21,7 @@ const AnimalSexInput: FC<AnimalSexInputProps> = (props: AnimalSexInputProps) => 
 
   const [isSexMenuHidden, setSexMenuHidden] = useState(true);
 
-  const sexChangeHandler = (value: 'M' | 'G') => {
+  const sexChangeHandler = (value: 'M' | 'G' | null) => {
     setValue(value);
     setSexMenuHidden(true);
   };
@@ -34,10 +35,10 @@ const AnimalSexInput: FC<AnimalSexInputProps> = (props: AnimalSexInputProps) => 
     >
       <div className={s['animal-sex-input__selection']} onClick={() => setSexMenuHidden(false)}>
         <div>
-          <FontAwesomeIcon icon={value === 'M' ? marsIcon : venusIcon} />
+          <FontAwesomeIcon icon={sexMenuItems.find((i) => i.value == value)?.icon || circleIcon} />
         </div>
         <div>
-          <span>{value === 'M' ? 'Boy' : 'Girl'}</span>
+          <span>{sexMenuItems.find((i) => i.value == value)?.name}</span>
         </div>
       </div>
     </FloatingMenu>

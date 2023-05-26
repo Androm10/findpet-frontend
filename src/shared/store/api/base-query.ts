@@ -1,6 +1,7 @@
 import { BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { BASE_URL } from '@shared/constants/api';
 import { JwtService } from '@shared/services/jwt.service';
+import { userActions } from '../slices/user.slice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -18,10 +19,13 @@ const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryEr
   extraOptions,
 ) => {
   let result = await baseQuery(args, api, extraOptions);
+  const { dispatch } = api;
+
   if (result.error && result.error.status == 401) {
     const refreshResult = await baseQuery(
       {
         url: '/auth/grantNewTokens',
+        method: 'POST',
         credentials: 'include',
         body: {
           refreshToken: JwtService.getRefreshToken(),
@@ -37,6 +41,7 @@ const customBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryEr
       result = await baseQuery(args, api, extraOptions);
     } else {
       JwtService.setRefreshToken('');
+      dispatch(userActions.setUser(null));
     }
   }
   return result;

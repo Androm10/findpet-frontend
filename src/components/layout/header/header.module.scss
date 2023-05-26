@@ -22,18 +22,35 @@
 }
 
 .header__navigation {
-  display: none;
-  @include md {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.header__plus-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 12px;
+  @include theme-aware('background', 'light-color');
+  border-radius: 50%;
+  top: 10px;
+}
+
+.header__compose-icons {
+  position: relative;
+}
+
+.header__user {
+  display: flex;
+  gap: 10px;
+  font-size: $font-size-m;
+  align-items: center;
 }
 
 .header__menu-button {
-  @include md {
-    display: none;
-  }
+  // @include md {
+  //   display: none;
+  // }
 }
 
 .header__menu {

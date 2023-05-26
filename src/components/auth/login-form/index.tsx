@@ -4,7 +4,7 @@ import Button from '@ui/button';
 import Input from '@ui/input';
 import Spinner from '@ui/spinner';
 import { FC, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import s from './login-form.module.scss';
 
 const LoginForm: FC = () => {
@@ -51,6 +51,9 @@ const LoginForm: FC = () => {
       >
         {isLoading ? <Spinner /> : 'Login'}
       </Button>
+      <div className={s['login-form__hint']}>
+        Don't have an account? <Link to={routes.signup}>Sign up</Link>.
+      </div>
     </div>
   );
 };

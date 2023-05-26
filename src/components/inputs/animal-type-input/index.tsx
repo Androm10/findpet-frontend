@@ -8,15 +8,21 @@ import Menu from '@ui/menu';
 import { AnimalTypes } from 'core/entities/animal.entity';
 
 interface AnimalTypeInputProps {
-  value: keyof typeof AnimalTypes;
-  setValue: (value: keyof typeof AnimalTypes) => void;
+  value: keyof typeof AnimalTypes | null;
+  setValue: (value: keyof typeof AnimalTypes | null) => void;
 }
 
 const typesMenuItems = Object.keys(AnimalTypes).map((type) => ({
   name: type,
-  value: type,
+  value: type as string | null,
   icon: getAnimalTypeIcon(type as keyof typeof AnimalTypes),
 }));
+
+typesMenuItems.push({
+  name: 'Any',
+  value: null,
+  icon: circleIcon,
+});
 
 const AnimalTypeInput: FC<AnimalTypeInputProps> = (props: AnimalTypeInputProps) => {
   const { value, setValue } = props;
@@ -40,7 +46,7 @@ const AnimalTypeInput: FC<AnimalTypeInputProps> = (props: AnimalTypeInputProps) 
           <FontAwesomeIcon icon={value ? getAnimalTypeIcon(value) : circleIcon} />
         </div>
         <div>
-          <span>{value}</span>
+          <span>{value || 'Any'}</span>
         </div>
       </div>
     </FloatingMenu>

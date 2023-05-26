@@ -1,122 +1,34 @@
-import { FC } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import s from './pets.module.scss';
-import AnimalCard from 'components/animal/animal-card';
-import { AnimalEntity, AnimalTypes } from 'core/entities/animal.entity';
-import Input from '@ui/input';
-import Button from '@ui/button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { searchIcon } from '@shared/font-awesome-icons';
-import Select from '@ui/select';
+import { AnimalTypes } from 'core/entities/animal.entity';
+
 import SearchOptions from 'components/animal/search-options';
 import AnimalList from 'components/animal/animal-list';
 import { useGetAnimalsQuery } from '@shared/store/api/animal.api';
 import Spinner from '@ui/spinner';
+import { useAppSelector } from '@shared/hooks/app-selector.hook';
 
 const PetsPage: FC = () => {
-  const { data, isLoading, isFetching } = useGetAnimalsQuery(undefined);
+  const [page, setPage] = useState(1);
+  const { name, sex, type } = useAppSelector((state) => state.animalsFilterReducer);
 
-  // const pets: AnimalEntity[] = [
-  //   {
-  //     id: 1,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  // ];
+  const [args, setArgs] = useState<any>({});
+  const timeoutRef = useRef<number>();
 
-  if (isLoading || isFetching || !data) {
-    return <Spinner />;
-  }
+  const { data, isLoading, isFetching } = useGetAnimalsQuery(args);
+
+  useEffect(() => {
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = window.setTimeout(() => setArgs({ page, filter: { name, sex, type } }), 500);
+  }, [page, name, sex, type]);
 
   return (
     <div className={s['pet-page']}>
       <SearchOptions />
       <h1>Find a pet for yourself!</h1>
-      <AnimalList animals={data.result} />
+      {isLoading || isFetching || !data ? <Spinner /> : <AnimalList animals={data.result} />}
     </div>
   );
 };

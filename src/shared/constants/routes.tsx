@@ -9,6 +9,7 @@ import LoginPage from 'pages/login';
 import PetsPage from 'pages/pets';
 import ShelterPage from 'pages/shelter';
 import SheltersPage from 'pages/shelters';
+import SignupPage from 'pages/signup';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const routes = {
@@ -20,14 +21,18 @@ export const routes = {
   shelter: 'shelter/',
   createShelter: 'shelter-create/',
   shelters: 'shelters',
-  login: 'login',
-  signup: 'signup',
+  login: '/login',
+  signup: '/signup',
 };
 
 export const router = createBrowserRouter([
   {
     path: routes.login,
     element: <LoginPage />,
+  },
+  {
+    path: routes.signup,
+    element: <SignupPage />,
   },
   {
     path: routes.home,

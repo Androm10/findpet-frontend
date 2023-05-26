@@ -49,6 +49,7 @@ export const {
   useDeleteShelterMutation,
   useCreateShelterMutation,
   useUpdateShelterMutation,
+  useLazyGetShelterQuery,
 } = shelterApi;
 
 type CreateShelter = {

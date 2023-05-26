@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '@shared/constants/api';
+import { buildQuery } from '@shared/utils/build-query';
 import { AnimalEntity } from 'core/entities/animal.entity';
 import { Paginated } from 'core/types/paginated.type';
 import customBaseQuery from './base-query';
@@ -13,8 +14,8 @@ export const animalApi = createApi({
       query: (id) => `animal/${id}`,
       providesTags: ['Animal'],
     }),
-    getAnimals: builder.query<Paginated<AnimalEntity>, undefined>({
-      query: () => `animal/`,
+    getAnimals: builder.query<Paginated<AnimalEntity>, GetAnimals>({
+      query: ({ limit, page, filter }) => `animal?limit=${limit || 20}&page=${page || 1}&${buildQuery(filter)}`,
       providesTags: ['Animal'],
     }),
     createAnimal: builder.mutation<AnimalEntity, CreateAnimal>({
@@ -33,6 +34,15 @@ export const animalApi = createApi({
       }),
       invalidatesTags: ['Animal'],
     }),
+    addAnimalPhotos: builder.mutation<AnimalEntity, UpdateAnimalPhotos>({
+      query: ({ id, formData }) => ({
+        url: `animal/${id}/photos`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['Animal'],
+    }),
+
     deleteAnimal: builder.mutation<AnimalEntity, number>({
       query: (id) => ({
         url: `animal/${id}`,
@@ -49,10 +59,24 @@ export const {
   useDeleteAnimalMutation,
   useCreateAnimalMutation,
   useUpdateAnimalMutation,
+  useAddAnimalPhotosMutation,
 } = animalApi;
+
+type GetAnimals = {
+  limit?: number;
+  page?: number;
+  filter?: {
+    name?: string;
+    sex?: string;
+    type?: string;
+  };
+};
 
 type CreateAnimal = {
   name: string;
+  description?: string;
+  shelterId?: string;
+  orphanageDate?: Date;
   type: string;
   age: number;
   sex: string;
@@ -60,8 +84,9 @@ type CreateAnimal = {
 
 type UpdateAnimal = {
   id: string;
-  name?: string;
-  type?: string;
-  age?: number;
-  sex?: string;
+} & Partial<CreateAnimal>;
+
+type UpdateAnimalPhotos = {
+  id: number;
+  formData: FormData;
 };

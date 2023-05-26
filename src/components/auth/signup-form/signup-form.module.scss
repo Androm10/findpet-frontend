@@ -1,12 +1,11 @@
 @import '../../../scss/constants/fonts.scss';
-@import '../../../scss/mixins/theme-aware.scss';
 
-.login-form {
+.signup-form {
   width: 100%;
   height: 100%;
 }
 
-.login-form__field {
+.signup-form__field {
   margin-top: 20px;
   color: #fff;
   display: flex;
@@ -14,29 +13,21 @@
   gap: 10px;
 }
 
-.login-form__hint {
-  font-size: $font-size-s;
-  @include theme-aware('color', 'text-second-color');
-  text-align: center;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.login-form__input {
+.signup-form__input {
   font-size: $font-size-l;
   width: 100%;
 }
 
-.login-form__buttons {
+.signup-form__buttons {
   margin-top: 40px;
 }
 
-.login-form__login {
+.signup-form__signup {
   margin-top: 40px;
   width: 100%;
 }
 
-.login-form__errors {
+.signup-form__errors {
   color: red;
   position: absolute;
   width: calc(100% - 40px);

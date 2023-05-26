@@ -33,8 +33,8 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
       </div>
       <div className={s['animal-card__photos']}>
         {photos &&
-          photos.slice(1, 4).map((photo) => (
-            <div className={s['animal-card__photo-container']}>
+          photos.slice(1, 4).map((photo, index) => (
+            <div key={photo.url} className={s['animal-card__photo-container']}>
               <img src={photo.url} />
             </div>
           ))}
