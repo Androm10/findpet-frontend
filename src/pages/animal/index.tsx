@@ -6,6 +6,7 @@ import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import s from './animal.module.scss';
 import pawImage from 'assets/images/animal-paw.png';
+import animalAvatarImage from 'assets/images/animal-avatar.jpg';
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
 import { useGetAnimalQuery } from '@shared/store/api/animal.api';
 import { ShelterEntity } from 'core/entities/shelter.entity';
@@ -53,14 +54,14 @@ const AnimalPage: FC = () => {
     return <Spinner />;
   }
 
-  if (!animal || !shelter) return null;
+  if (!animal) return null;
 
   return (
     <div className={s['animal-page']}>
       <div className={s['animal-page__content']}>
         <div className={s['animal-page__info']}>
           <div className={s['animal-page__avatar']}>
-            <img src={animal.photos[0].url} />
+            <img src={animal.photos[0]?.url || animalAvatarImage} />
           </div>
 
           <div className={s['animal-page__props']}>
@@ -77,51 +78,57 @@ const AnimalPage: FC = () => {
             </div>
             <hr className={s['animal-page__separator']} />
             <div>{animal.description}</div>
-            <div>
-              <div className={s['animal-page__shelter-data']}>
-                <FontAwesomeIcon icon={locationIcon} />
-                <label>{address}</label>
+            {!!shelter && (
+              <div>
+                <div className={s['animal-page__shelter-data']}>
+                  <FontAwesomeIcon icon={locationIcon} />
+                  <label>{address}</label>
+                </div>
+                {!!shelter.contactPhone && (
+                  <div className={s['animal-page__shelter-data']}>
+                    <FontAwesomeIcon icon={phoneIcon} />
+                    <label>{shelter.contactPhone}</label>
+                  </div>
+                )}
+                {!!shelter.contactEmail && (
+                  <div className={s['animal-page__shelter-data']}>
+                    <FontAwesomeIcon icon={emailIcon} />
+                    <label>{shelter.contactEmail}</label>
+                  </div>
+                )}
               </div>
-              {!!shelter.contactPhone && (
-                <div className={s['animal-page__shelter-data']}>
-                  <FontAwesomeIcon icon={phoneIcon} />
-                  <label>{shelter.contactPhone}</label>
-                </div>
-              )}
-              {!!shelter.contactEmail && (
-                <div className={s['animal-page__shelter-data']}>
-                  <FontAwesomeIcon icon={emailIcon} />
-                  <label>{shelter.contactEmail}</label>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
         <div className={s['animal-page__other']}>
-          <div className={s['animal-page__photos-view']}>
-            <div className={s['animal-page__photos']}>
-              {animal.photos.slice(1).map((photo) => (
-                <div key={photo.url + photo.name} className={s['animal-page__photo']}>
-                  <img src={photo.url} />
-                </div>
-              ))}
+          {animal.photos.length > 1 && (
+            <div className={s['animal-page__photos-view']}>
+              <div className={s['animal-page__photos']}>
+                {animal.photos.slice(1).map((photo) => (
+                  <div key={photo.url + photo.name} className={s['animal-page__photo']}>
+                    <img src={photo.url} />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className={s['animal-page__shelter']}>
-            <div className={s['animal-page__shelter-name']}>{shelter.name}</div>
-            <div>{address}</div>
-            <div className={s['animal-page__map']}>
-              <YMaps query={{ apikey: YANDEX_API_KEY }}>
-                <Map
-                  width="100%"
-                  height="400px"
-                  defaultState={{ center: [shelter.coords.longitude, shelter.coords.latitude], zoom: 9 }}
-                >
-                  <Placemark geometry={[shelter.coords.longitude, shelter.coords.latitude]} />
-                </Map>
-              </YMaps>
+          )}
+          {!!shelter && (
+            <div className={s['animal-page__shelter']}>
+              <div className={s['animal-page__shelter-name']}>{shelter.name}</div>
+              <div>{address}</div>
+              <div className={s['animal-page__map']}>
+                <YMaps query={{ apikey: YANDEX_API_KEY }}>
+                  <Map
+                    width="100%"
+                    height="400px"
+                    defaultState={{ center: [shelter.coords.longitude, shelter.coords.latitude], zoom: 9 }}
+                  >
+                    <Placemark geometry={[shelter.coords.longitude, shelter.coords.latitude]} />
+                  </Map>
+                </YMaps>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

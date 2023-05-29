@@ -7,6 +7,7 @@ import { AnimalEntity } from 'core/entities/animal.entity';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import s from './animal-card.module.scss';
+import animalAvatar from 'assets/images/animal-avatar.jpg';
 
 interface AnimalCardProps {
   animal: AnimalEntity;
@@ -19,7 +20,7 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
   return (
     <div className={s['animal-card']}>
       <div className={s['animal-card__header']}>
-        <Avatar url={photos && photos.length > 0 ? photos[0].url : undefined} label={name[0]} />
+        <Avatar url={photos && photos.length > 0 ? photos[0].url : animalAvatar} label={name[0]} />
         <div className={s['animal-card__info-container']}>
           <div className={s['animal-card__info']}>
             <label>
@@ -32,12 +33,19 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
         </div>
       </div>
       <div className={s['animal-card__photos']}>
-        {photos &&
-          photos.slice(1, 4).map((photo, index) => (
-            <div key={photo.url} className={s['animal-card__photo-container']}>
-              <img src={photo.url} />
-            </div>
-          ))}
+        {photos && photos.length > 1 ? (
+          <>
+            {photos.slice(1, 4).map((photo, index) => (
+              <div key={photo.url} className={s['animal-card__photo-container']}>
+                <img src={photo.url} />
+              </div>
+            ))}
+          </>
+        ) : (
+          <div className={s['animal-card__photo-container']}>
+            <img src={animalAvatar} />
+          </div>
+        )}
       </div>
       <div className={s['animal-card__description']}>{description}</div>
       <div className={s['animal-card__footer']}>

@@ -7,6 +7,7 @@ import { AnimalEntity } from 'core/entities/animal.entity';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import s from './animal-mini-card.module.scss';
+import animalAvatar from 'assets/images/animal-avatar.jpg';
 
 interface AnimalMiniCardProps {
   animal: AnimalEntity;
@@ -19,7 +20,7 @@ const AnimalMiniCard: FC<AnimalMiniCardProps> = (props: AnimalMiniCardProps) => 
   return (
     <div className={s['animal-mini-card']}>
       <div className={s['animal-mini-card__photo']}>
-        <img src={photos.length > 0 ? photos[0].url : undefined} />
+        <img src={photos.length > 0 ? photos[0].url : animalAvatar} />
       </div>
       <div className={s['animal-mini-card__info-container']}>
         <div className={s['animal-mini-card__info']}>

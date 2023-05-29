@@ -15,10 +15,12 @@ import {
   searchIcon,
   sheltersIcon,
   plusIcon,
+  userIcon,
+  editIcon,
 } from '@shared/font-awesome-icons';
 import FlexContainer from 'components/containers/flex-container';
 import Button from '@ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { routes } from '@shared/constants/routes';
 import Toggle from '@ui/toggle';
 import Input from '@ui/input';
@@ -26,11 +28,18 @@ import { classNames } from '@shared/utils/class-names';
 import logo from 'assets/images/logo.png';
 import { useAppSelector } from '@shared/hooks/app-selector.hook';
 import Avatar from '@ui/avatar';
+import { useAppDispatch } from '@shared/hooks/app-dispatch.hook';
+import { animalsFilterActions } from '@shared/store/slices/animals-filter.slice';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
   const [isMenu, setMenu] = useState(false);
   const { user } = useAppSelector((state) => state.userReducer);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { setName } = animalsFilterActions;
+  const [searchText, setSearchText] = useState('');
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   const changeThemeHandler = () => {
@@ -50,6 +59,11 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
     event.stopPropagation();
   };
 
+  const searchHandler = () => {
+    dispatch(setName(searchText));
+    navigate(routes.pets);
+  };
+
   useEffect(() => {
     document.addEventListener('click', clickOutsideHandler);
     return () => {
@@ -66,8 +80,18 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
 
         <nav className={s['header__navigation']}>
           {user ? (
-            <div className={s.header__user}>
-              {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />{' '}
+            <div className={s['header__user-section']}>
+              <div className={s['header__user-property']}>
+                {!!user.shelterId && (
+                  <Link to={'/' + routes.shelter + user.shelterId}>
+                    <FontAwesomeIcon icon={sheltersIcon} />
+                  </Link>
+                )}
+                <FontAwesomeIcon icon={userIcon} />
+              </div>
+              <div className={s.header__user}>
+                {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />{' '}
+              </div>
             </div>
           ) : (
             <Link to={routes.login}>
@@ -105,21 +129,31 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
         </div>
         <div className={s.header__search}>
           <div className={s['header__input-container']}>
-            <Input placeholder="Search pets..." fullWidth>
-              <FontAwesomeIcon icon={searchIcon} />
+            <Input
+              placeholder="Search pets..."
+              fullWidth
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            >
+              <Button as="button" onClick={searchHandler}>
+                <FontAwesomeIcon icon={searchIcon} />
+              </Button>
             </Input>
           </div>
         </div>
 
         {!!user && (
           <div>
-            <Link to={routes.createShelter} className={s.header__link}>
+            <Link
+              to={user.shelterId ? `/${routes.shelter}${user.shelterId}` : routes.createShelter}
+              className={s.header__link}
+            >
               <div className={s['header__menu-item']}>
                 <div className={s['header__compose-icons']}>
                   <FontAwesomeIcon icon={sheltersIcon} />
-                  <FontAwesomeIcon className={s['header__plus-icon']} icon={plusIcon} />
+                  <FontAwesomeIcon className={s['header__plus-icon']} icon={user.shelterId ? editIcon : plusIcon} />
                 </div>
-                ADD SHELTER
+                {user.shelterId ? 'MY SHELTER' : 'ADD SHELTER'}
               </div>
             </Link>
             <Link to={routes.createAnimal} className={s.header__link}>

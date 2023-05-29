@@ -18,6 +18,11 @@ export const animalApi = createApi({
       query: ({ limit, page, filter }) => `animal?limit=${limit || 20}&page=${page || 1}&${buildQuery(filter)}`,
       providesTags: ['Animal'],
     }),
+    getAnimalsByShelterId: builder.query<Paginated<AnimalEntity>, GetAnimalsByShelterId>({
+      query: ({ limit, page, shelterId }) =>
+        `animal/getByShelterId/${shelterId}?limit=${limit || 20}&page=${page || 1}`,
+      providesTags: ['Animal'],
+    }),
     createAnimal: builder.mutation<AnimalEntity, CreateAnimal>({
       query: (data) => ({
         url: `animal/`,
@@ -55,7 +60,10 @@ export const animalApi = createApi({
 
 export const {
   useGetAnimalsQuery,
+  useLazyGetAnimalsQuery,
   useGetAnimalQuery,
+  useGetAnimalsByShelterIdQuery,
+  useLazyGetAnimalsByShelterIdQuery,
   useDeleteAnimalMutation,
   useCreateAnimalMutation,
   useUpdateAnimalMutation,
@@ -70,6 +78,12 @@ type GetAnimals = {
     sex?: string;
     type?: string;
   };
+};
+
+type GetAnimalsByShelterId = {
+  limit?: number;
+  page?: number;
+  shelterId: number;
 };
 
 type CreateAnimal = {

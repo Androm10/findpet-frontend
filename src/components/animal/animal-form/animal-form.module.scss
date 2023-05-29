@@ -127,7 +127,8 @@
 .animal-form__input {
   font-size: $font-size-m;
   height: 40px;
-  width: 300px;
+  max-width: 400px;
+  width: 100%;
   color-scheme: dark;
 }
 

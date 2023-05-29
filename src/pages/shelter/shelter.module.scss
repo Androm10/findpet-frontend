@@ -105,7 +105,6 @@
   }
 
   @include lg {
-    justify-content: center;
     * {
       flex: 20%;
       flex-grow: 0;
@@ -131,4 +130,21 @@
   align-items: center;
   justify-content: center;
   display: flex;
+}
+
+.shelter-page__add-animal {
+  border-radius: 20px;
+  height: 100%;
+  @include theme-aware('background', 'light-color');
+  color: #fff;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'lighter-color');
+  }
+
+  overflow: hidden;
 }

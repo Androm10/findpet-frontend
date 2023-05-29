@@ -6,6 +6,7 @@ export const homeIcon = icon({ name: 'home' });
 export const devIcon = icon({ name: 'list' });
 export const petsIcon = icon({ name: 'cat' });
 export const sheltersIcon = icon({ name: 'house-medical' });
+export const userIcon = icon({ name: 'user' });
 export const burgerIcon = icon({ name: 'bars' });
 export const crossIcon = icon({ name: 'xmark' });
 export const circleIcon = icon({ name: 'circle' });
@@ -22,6 +23,7 @@ export const locationIcon = icon({ name: 'map-location-dot' });
 export const internetIcon = icon({ name: 'globe' });
 export const cameraIcon = icon({ name: 'camera' });
 export const plusIcon = icon({ name: 'plus' });
+export const editIcon = icon({ name: 'pen' });
 
 export const marsIcon = icon({ name: 'mars' });
 export const venusIcon = icon({ name: 'venus' });

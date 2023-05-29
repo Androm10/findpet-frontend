@@ -38,7 +38,6 @@ export const router = createBrowserRouter([
   {
     path: routes.home,
     element: <Layout />,
-    errorElement: <Error404Page />,
     children: [
       {
         index: true,
@@ -73,5 +72,9 @@ export const router = createBrowserRouter([
         element: <CreateAnimalPage />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <Error404Page />,
   },
 ]);
