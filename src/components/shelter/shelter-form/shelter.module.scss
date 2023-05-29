@@ -137,6 +137,12 @@
   flex-direction: column;
 }
 
+.shelter-form__map-wrapper {
+  border-radius: 10px;
+  outline: 5px solid;
+  @include theme-aware('outline-color', 'second-color');
+}
+
 .shelter-form__buttons {
   margin-top: 40px;
 }

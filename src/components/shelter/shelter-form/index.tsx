@@ -1,5 +1,5 @@
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
-import { FC, useEffect, useId, useState } from 'react';
+import { FC, useEffect, useId, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import s from './shelter.module.scss';
 import {
@@ -21,6 +21,8 @@ import { YANDEX_API_KEY } from '@shared/constants/api';
 import { coordsByAddress } from '@shared/utils/coords-by-address';
 import { useDebounce } from '@shared/hooks/use-debounce.hook';
 import { Coords } from 'core/types/coords.type';
+import { readImageUrl } from '@shared/utils/read-file';
+import Textarea from '@ui/textarea';
 
 const ShelterForm: FC = () => {
   const shelter = {
@@ -56,13 +58,13 @@ const ShelterForm: FC = () => {
     isVerified: true,
   };
 
-  const fileReader = new FileReader();
+  const photoInputId = useId();
+  const [avatar, setAvatar] = useState();
+  const [avatarUrl, setAvatarUrl] = useState('');
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
-  fileReader.onloadend = () => {
-    if (fileReader.result) {
-      setAvatarUrl(fileReader.result as string);
-    }
-  };
+  const [address, setAddress] = useState('');
+  const [coords, setCoords] = useState<Coords>({ longitude: 10, latitude: 10 });
 
   const avatarChangeHandler = (event: any) => {
     event.preventDefault();
@@ -72,20 +74,19 @@ const ShelterForm: FC = () => {
       console.log(file);
 
       setAvatar(file);
-      fileReader.readAsDataURL(file);
+      readImageUrl(file).then((res) => setAvatarUrl(res));
     }
   };
 
   const avatarClearHandler = () => {
     setAvatar(undefined);
     setAvatarUrl('');
+    if (avatarInputRef.current) {
+      console.log(avatarInputRef.current);
+      avatarInputRef.current.value = '';
+      avatarInputRef.current.files = null;
+    }
   };
-
-  const photoInputId = useId();
-  const [avatar, setAvatar] = useState();
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [address, setAddress] = useState('');
-  const [coords, setCoords] = useState<Coords>({ longitude: 10, latitude: 10 });
 
   const fetchAddress = async () => {
     const result = await coordsByAddress(address);
@@ -108,6 +109,7 @@ const ShelterForm: FC = () => {
           </label>
           <div className={s['shelter-form__other-photos']}>
             <Input
+              ref={avatarInputRef}
               onChange={avatarChangeHandler}
               fullWidth
               type="file"
@@ -131,7 +133,7 @@ const ShelterForm: FC = () => {
 
           <div className={s['shelter-form__prop']}>
             <label className={s['shelter-form__prop-name']}>Description</label>
-            <Input className={s['shelter-form__input']} />
+            <Textarea rows={4} className={s['shelter-form__input']} />
           </div>
         </div>
       </div>
@@ -159,21 +161,21 @@ const ShelterForm: FC = () => {
             </div>
             <div className={s['shelter-form__map']}>
               <label>Address</label>
-              <Input
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className={s['shelter-form__input']}
-              />
-              <YMaps query={{ apikey: YANDEX_API_KEY }}>
-                <Map
-                  width="100%"
-                  height="400px"
-                  state={{ center: [coords.longitude, coords.latitude], zoom: 12 }}
-                  defaultState={{ center: [coords.longitude, coords.latitude], zoom: 9 }}
-                >
-                  {coords && <Placemark geometry={[coords.longitude, coords.latitude]} />}
-                </Map>
-              </YMaps>
+              <Input value={address} onChange={(e) => setAddress(e.target.value)} className={s['shelter-form__input']}>
+                <FontAwesomeIcon icon={locationIcon} />
+              </Input>
+              <div className={s['shelter-form__map-wrapper']}>
+                <YMaps query={{ apikey: YANDEX_API_KEY }}>
+                  <Map
+                    width="100%"
+                    height="400px"
+                    state={{ center: [coords.longitude, coords.latitude], zoom: 12 }}
+                    defaultState={{ center: [coords.longitude, coords.latitude], zoom: 9 }}
+                  >
+                    {coords && <Placemark geometry={[coords.longitude, coords.latitude]} />}
+                  </Map>
+                </YMaps>
+              </div>
             </div>
           </div>
         </div>

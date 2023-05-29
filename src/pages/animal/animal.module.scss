@@ -137,4 +137,7 @@
 .animal-page__map {
   width: 100%;
   display: flex;
+  border-radius: 10px;
+  outline: 5px solid;
+  @include theme-aware('outline-color', 'second-color');
 }

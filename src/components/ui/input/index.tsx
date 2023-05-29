@@ -8,6 +8,7 @@ interface InputOwnProps {
   children?: ReactNode;
   htmlId?: string;
 }
+//TODO: make input polymorphic
 
 type InputProps = InputOwnProps & Omit<InputHTMLAttributes<HTMLInputElement>, keyof InputOwnProps>;
 

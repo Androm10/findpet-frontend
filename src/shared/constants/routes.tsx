@@ -1,5 +1,6 @@
 import Layout from 'components/layout/layout/layout';
 import ShelterForm from 'components/shelter/shelter-form';
+import Error404Page from 'pages/404';
 import AnimalPage from 'pages/animal';
 import CreateAnimalPage from 'pages/create-animal';
 import CreateShelterPage from 'pages/create-shelter';
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
   {
     path: routes.home,
     element: <Layout />,
+    errorElement: <Error404Page />,
     children: [
       {
         index: true,

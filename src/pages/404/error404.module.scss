@@ -1,0 +1,55 @@
+@import '../../scss/constants/fonts.scss';
+@import '../../scss/mixins/breakpoints.scss';
+
+.error-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.error-page__gradient {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  height: 2px;
+}
+
+.error-page__message {
+  display: flex;
+  padding: 10%;
+
+  flex-direction: column;
+  margin-bottom: 20%;
+  z-index: 2;
+  @include md {
+    display: block;
+  }
+  h1 {
+    text-shadow: 2px 15px 20px black;
+    display: inline;
+    font-size: 200px;
+    margin: 0;
+  }
+  label {
+    text-shadow: 2px 20px 20px black;
+    margin-left: 20px;
+    font-size: 48px;
+  }
+}
+
+.error-page__background {
+  position: absolute;
+  width: 70%;
+  bottom: 0;
+  z-index: 1;
+  right: 0;
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    filter: blur(4px);
+  }
+}
