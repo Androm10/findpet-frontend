@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AnimalMiniCard from 'components/animal/animal-mini-card';
 import { AnimalEntity } from 'core/entities/animal.entity';
 import { routes } from '@shared/constants/routes';
-import { useGetShelterQuery, useLazyGetShelterQuery } from '@shared/store/api/shelter.api';
+import { useGetShelterQuery, useLazyGetShelterQuery, useLazyGetWorkersQuery } from '@shared/store/api/shelter.api';
 import {
   useGetAnimalsQuery,
   useLazyGetAnimalsByShelterIdQuery,
@@ -19,166 +19,21 @@ import shelterAvatar from 'assets/images/shelter-avatar.png';
 import { addressByCoords } from '@shared/utils/address-by-coords';
 import { useUserLocation } from '@shared/hooks/use-user-location.hook';
 import { useAppSelector } from '@shared/hooks/app-selector.hook';
+import { UserEntity } from 'core/entities/user.entity';
+import UserList from 'components/user/user-list';
+import Button from '@ui/button';
+import Modal from '@ui/modal';
+import AddWorkerForm from 'components/user/add-worker-form';
 
 const ShelterPage: FC = () => {
   const { id } = useParams();
   const { user } = useAppSelector((state) => state.userReducer);
-
-  // const animals: AnimalEntity[] = [
-  //   {
-  //     id: 1,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'vasya',
-  //     type: 'cat',
-  //     description: 'a very lovely cat',
-  //     photos: [
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //       {
-  //         name: 'fsf.png',
-  //         url: 'https://images.unsplash.com/flagged/photo-1557427161-4701a0fa2f42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-  //       },
-  //     ],
-  //     age: 2,
-  //     sex: 'M',
-  //   },
-  // ];
-
-  // const shelter = {
-  //   id: 1,
-  //   name: 'Pet home',
-  //   coords: { latitude: 12, longitude: 12 },
-  //   photos: [
-  //     {
-  //       name: 'photo',
-  //       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvAaUahe6u1LzbxEuBqO2h3_F8QZq-mHVcS-vfY7qc6Oq5rIDe0TnO9M3oqrsizq0Ya0U&usqp=CAU',
-  //     },
-  //     {
-  //       name: 'photo',
-  //       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvAaUahe6u1LzbxEuBqO2h3_F8QZq-mHVcS-vfY7qc6Oq5rIDe0TnO9M3oqrsizq0Ya0U&usqp=CAU',
-  //     },
-  //     {
-  //       name: 'photo',
-  //       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvAaUahe6u1LzbxEuBqO2h3_F8QZq-mHVcS-vfY7qc6Oq5rIDe0TnO9M3oqrsizq0Ya0U&usqp=CAU',
-  //     },
-  //     {
-  //       name: 'photo',
-  //       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvAaUahe6u1LzbxEuBqO2h3_F8QZq-mHVcS-vfY7qc6Oq5rIDe0TnO9M3oqrsizq0Ya0U&usqp=CAU',
-  //     },
-  //     {
-  //       name: 'photo',
-  //       url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvAaUahe6u1LzbxEuBqO2h3_F8QZq-mHVcS-vfY7qc6Oq5rIDe0TnO9M3oqrsizq0Ya0U&usqp=CAU',
-  //     },
-  //   ],
-  //   description: 'A home for every lost animal',
-  //   contactPhone: '+880-555-35-35',
-  //   contactEmail: 'email.contact@example.com',
-  //   address: 'fsa rwer2 23 3 ',
-  //   isVerified: true,
-  // };
+  const [shelter, setShelter] = useState<ShelterEntity | undefined>();
+  const [animals, setAnimals] = useState<AnimalEntity[] | undefined>();
+  const [workers, setWorkers] = useState<UserEntity[] | undefined>();
+  const [address, setAddress] = useState('');
+  const [isModalHidden, setModalHidden] = useState<boolean>(true);
+  const location = useUserLocation();
 
   const {
     data: shelterData,
@@ -192,10 +47,10 @@ const ShelterPage: FC = () => {
     { data: animalsData, isLoading: isAnimalsLoading, isFetching: isAnimalsFetching, isSuccess: isAnimalsSuccess },
   ] = useLazyGetAnimalsByShelterIdQuery();
 
-  const [shelter, setShelter] = useState<ShelterEntity | undefined>(shelterData);
-  const [animals, setAnimals] = useState<AnimalEntity[] | undefined>();
-  const [address, setAddress] = useState('');
-  const location = useUserLocation();
+  const [
+    getWorkers,
+    { data: workersData, isLoading: isWorkersLoading, isFetching: isWorkersFetching, isSuccess: isWorkersSuccess },
+  ] = useLazyGetWorkersQuery();
 
   useEffect(() => {
     if (isShelterSuccess && shelterData) {
@@ -204,6 +59,7 @@ const ShelterPage: FC = () => {
       getAnimals({
         shelterId: shelterData.id,
       });
+      getWorkers(shelterData.id);
     }
   }, [isShelterFetching, isShelterLoading]);
 
@@ -212,6 +68,12 @@ const ShelterPage: FC = () => {
       setAnimals(animalsData.result);
     }
   }, [isAnimalsFetching, isAnimalsLoading]);
+
+  useEffect(() => {
+    if (isWorkersSuccess && workersData) {
+      setWorkers(workersData);
+    }
+  });
 
   if (isShelterLoading || isShelterFetching) {
     return <Spinner />;
@@ -318,7 +180,31 @@ const ShelterPage: FC = () => {
             </div>
           </div>
         </div>
+        <div>
+          <div className={s['shelter-page__section-header']}>
+            <h2>Workers</h2>
+            {!!user && !!user.shelterId && (
+              <Button as="button" size="medium" onClick={() => setModalHidden(false)}>
+                Add
+              </Button>
+            )}
+          </div>
+          {isWorkersFetching || isWorkersLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              {!!workers && (
+                <div className={s['shelter-page__worker-list']}>
+                  <UserList users={workers} />
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
+      <Modal isHidden={isModalHidden} setHidden={setModalHidden}>
+        <AddWorkerForm onSuccess={() => setModalHidden(true)} />
+      </Modal>
     </div>
   );
 };

@@ -2,17 +2,22 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '@shared/constants/api';
 import { buildQuery } from '@shared/utils/build-query';
 import { ShelterEntity } from 'core/entities/shelter.entity';
+import { UserEntity } from 'core/entities/user.entity';
 import { Paginated } from 'core/types/paginated.type';
 import customBaseQuery from './base-query';
 
 export const shelterApi = createApi({
   reducerPath: 'shelterApi',
   baseQuery: customBaseQuery,
-  tagTypes: ['Shelter'],
+  tagTypes: ['Shelter', 'Workers'],
   endpoints: (builder) => ({
     getShelter: builder.query<ShelterEntity, number>({
       query: (id) => `shelter/${id}`,
       providesTags: ['Shelter'],
+    }),
+    getWorkers: builder.query<UserEntity[], number>({
+      query: (id) => `shelter/${id}/workers`,
+      providesTags: ['Workers'],
     }),
     getShelters: builder.query<Paginated<ShelterEntity>, undefined>({
       query: () => `shelter/`,
@@ -25,6 +30,14 @@ export const shelterApi = createApi({
         body: formData,
       }),
       invalidatesTags: ['Shelter'],
+    }),
+    addWorker: builder.mutation<ShelterEntity, AddWorker>({
+      query: ({ id, ...other }) => ({
+        url: `shelter/${id}/addWorker`,
+        method: 'PATCH',
+        body: other,
+      }),
+      invalidatesTags: ['Workers'],
     }),
     getNearestShelters: builder.query<Paginated<ShelterEntity>, GetNearest>({
       query: ({ limit, page, ...other }) =>
@@ -66,6 +79,9 @@ export const {
   useUpdateShelterMutation,
   useAddShelterPhotosMutation,
   useLazyGetShelterQuery,
+  useAddWorkerMutation,
+  useGetWorkersQuery,
+  useLazyGetWorkersQuery,
 } = shelterApi;
 
 type GetNearest = {
@@ -73,6 +89,11 @@ type GetNearest = {
   lng: number;
   limit?: number;
   page?: number;
+};
+
+type AddWorker = {
+  id: number;
+  email: string;
 };
 
 type CreateShelter = {

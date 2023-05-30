@@ -15,6 +15,12 @@
   gap: 40px;
 }
 
+.shelter-page__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .shelter-page__photos {
   display: flex;
   flex: 50%;
@@ -147,4 +153,10 @@
   }
 
   overflow: hidden;
+}
+
+.shelter-page__worker-list {
+  overflow-y: auto;
+  height: 200px;
+  padding: 10px;
 }

@@ -87,14 +87,18 @@
 }
 
 .header__user-property {
-  display: flex;
-  align-items: center;
+  display: none;
   gap: 15px;
   border-right: 2px solid;
   padding-right: 10px;
   @include theme-aware('border-color', 'shadow-color');
   a {
     color: #fff;
+  }
+
+  @include sm {
+    display: flex;
+    align-items: center;
   }
 }
 

@@ -1,0 +1,18 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.user-list__item {
+  padding: 10px;
+  border-radius: 10px;
+  @include theme-aware('background', 'light-color');
+  color: #fff;
+  &:hover {
+    @include theme-aware('background', 'lighter-color');
+  }
+}
