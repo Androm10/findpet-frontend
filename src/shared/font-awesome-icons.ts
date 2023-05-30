@@ -24,6 +24,7 @@ export const internetIcon = icon({ name: 'globe' });
 export const cameraIcon = icon({ name: 'camera' });
 export const plusIcon = icon({ name: 'plus' });
 export const editIcon = icon({ name: 'pen' });
+export const sendIcon = icon({ name: 'arrow-right' });
 
 export const marsIcon = icon({ name: 'mars' });
 export const venusIcon = icon({ name: 'venus' });

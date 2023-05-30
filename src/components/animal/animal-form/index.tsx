@@ -15,7 +15,10 @@ import Spinner from '@ui/spinner';
 
 const AnimalForm: FC = () => {
   const [createAnimal, { data, isLoading, isSuccess, isError }] = useCreateAnimalMutation();
-  const [addPhotos, { dataPhotos, isLoadingPhotos, isSuccessPhotos, isErrorPhotos }] = useAddAnimalPhotosMutation();
+  const [
+    addPhotos,
+    { data: dataPhotos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos, isError: isErrorPhotos },
+  ] = useAddAnimalPhotosMutation();
 
   const { user } = useAppSelector((state) => state.userReducer);
 

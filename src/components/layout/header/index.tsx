@@ -30,10 +30,13 @@ import { useAppSelector } from '@shared/hooks/app-selector.hook';
 import Avatar from '@ui/avatar';
 import { useAppDispatch } from '@shared/hooks/app-dispatch.hook';
 import { animalsFilterActions } from '@shared/store/slices/animals-filter.slice';
+import FloatingMenu from '@ui/floating-menu';
+import ChatbotWindow from 'components/chatbot/chatbot-window';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
   const [isMenu, setMenu] = useState(false);
+  const [isBotHidden, setBotHidden] = useState(false);
   const { user } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -87,7 +90,9 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
                     <FontAwesomeIcon icon={sheltersIcon} />
                   </Link>
                 )}
-                <FontAwesomeIcon icon={userIcon} />
+                <FloatingMenu element={<ChatbotWindow />} isHidden={isBotHidden} setHidden={setBotHidden}>
+                  <FontAwesomeIcon icon={userIcon} onClick={() => setBotHidden(false)} />
+                </FloatingMenu>
               </div>
               <div className={s.header__user}>
                 {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />{' '}
