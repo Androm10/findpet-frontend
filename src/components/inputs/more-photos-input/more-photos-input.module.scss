@@ -1,0 +1,51 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.more-photos-input {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  outline: 5px solid;
+  @include theme-aware('outline-color', 'light-color');
+  @include theme-aware('color', 'light-color');
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+.more-photos-input__button {
+  border-radius: 20px;
+  width: 300px;
+  @include theme-aware('background', 'light-color');
+  color: #fff;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'lighter-color');
+  }
+
+  overflow: hidden;
+}
+
+.more-photos-input__photo {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  position: relative;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.more-photos-input__remove {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}

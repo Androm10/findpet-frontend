@@ -25,8 +25,9 @@ const PetsPage: FC = () => {
   return (
     <div className={s['pet-page']}>
       <SearchOptions />
-      <h1>Find a pet for yourself!</h1>
-      {isLoading || isFetching || !data ? <Spinner /> : <AnimalList animals={data.result} />}
+      <div className={s['pet-page__list']}>
+        {isLoading || isFetching || !data ? <Spinner /> : <AnimalList animals={data.result} />}
+      </div>
     </div>
   );
 };

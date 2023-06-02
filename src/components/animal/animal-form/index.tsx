@@ -12,6 +12,9 @@ import { readImageUrl } from '@shared/utils/read-file';
 import { useAddAnimalPhotosMutation, useCreateAnimalMutation } from '@shared/store/api/animal.api';
 import { useAppSelector } from '@shared/hooks/app-selector.hook';
 import Spinner from '@ui/spinner';
+import { toast, ToastContainer } from 'react-toastify';
+import AvatarInput from 'components/inputs/avatar-input';
+import MorePhotosInput from 'components/inputs/more-photos-input';
 
 const AnimalForm: FC = () => {
   const [createAnimal, { data, isLoading, isSuccess, isError }] = useCreateAnimalMutation();
@@ -22,70 +25,20 @@ const AnimalForm: FC = () => {
 
   const { user } = useAppSelector((state) => state.userReducer);
 
-  const photoInputId = useId();
-  const otherPhotosInputId = useId();
-
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [age, setAge] = useState<number>(0);
   const [avatar, setAvatar] = useState();
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [type, setType] = useState<keyof typeof AnimalTypes>('cat');
-  const [sex, setSex] = useState<'M' | 'G'>('M');
+  const [type, setType] = useState<keyof typeof AnimalTypes | null>('cat');
+  const [sex, setSex] = useState<'M' | 'G' | null>('M');
   const [orphanageDate, setOrphanageDate] = useState('');
   const [otherPhotos, setOtherPhotos] = useState<any[]>([]);
-  const [otherPhotosUrls, setOtherPhotosUrls] = useState<string[]>([]);
-
-  const avatarInputRef = useRef<HTMLInputElement>(null);
-  const otherPhotosInputRef = useRef<HTMLInputElement>(null);
-
-  const avatarChangeHandler = (event: any) => {
-    event.preventDefault();
-
-    if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
-
-      setAvatar(file);
-      readImageUrl(file).then((res) => setAvatarUrl(res as string));
-    }
-  };
-
-  const otherPhotosChangeHandler = async (event: any) => {
-    event.preventDefault();
-
-    if (event.target.files && event.target.files.length) {
-      const files = event.target.files;
-
-      for (let i = 0; i < files.length; i++) {
-        let file = files.item(i);
-        setOtherPhotos((prev) => [...prev, file]);
-
-        readImageUrl(file).then((res) => setOtherPhotosUrls((prev) => [...prev, res as string]));
-      }
-      if (otherPhotosInputRef.current) {
-        otherPhotosInputRef.current.value = '';
-        otherPhotosInputRef.current.files = null;
-      }
-    }
-  };
-
-  const removeOtherPhotoHandler = (index: number) => {
-    setOtherPhotos((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-    setOtherPhotosUrls((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-  };
-
-  const avatarClearHandler = () => {
-    setAvatar(undefined);
-    setAvatarUrl('');
-    if (avatarInputRef.current) {
-      avatarInputRef.current.value = '';
-      avatarInputRef.current.files = null;
-    }
-  };
 
   //TODO: create proper notifications
 
   const createHandler = () => {
+    if (!sex || !type) return;
+
     createAnimal({
       name,
       description,
@@ -104,41 +57,26 @@ const AnimalForm: FC = () => {
           }
           addPhotos({ id: res.data.id, formData }).then((photoRes) => {
             if ('data' in photoRes) {
-              alert('Animal successfully created');
+              // alert('Animal successfully created');
+              toast.info('Animal successfully created');
             } else {
-              alert('Error while uploading photos');
+              // alert('Error while uploading photos');
+              toast.error('Error while uploading photos');
             }
           });
         } else {
-          alert('Cannot create animal');
+          // alert('Cannot create animal');
+          toast.error('Cannot create animal');
         }
       })
-      .catch((error) => alert('Cannot create animal'));
+      .catch((error) => toast.error('Cannot create animal'));
   };
 
   return (
     <div className={s['animal-form']}>
+      <ToastContainer />
       <div className={s['animal-form__info']}>
-        <div className={s['animal-form__photos']}>
-          <label htmlFor={photoInputId} className={s['animal-form__avatar']}>
-            {avatarUrl ? <img src={avatarUrl} /> : <FontAwesomeIcon icon={cameraIcon} size="10x" />}
-          </label>
-          <div className={s['animal-form__other-photos']}>
-            <Input
-              onChange={avatarChangeHandler}
-              fullWidth
-              type="file"
-              accept="image/png, image/gif, image/jpeg"
-              htmlId={photoInputId}
-              ref={avatarInputRef}
-            />
-            {avatar && (
-              <Button onClick={avatarClearHandler} as="a" round size="medium">
-                <FontAwesomeIcon icon={crossIcon} />
-              </Button>
-            )}
-          </div>
-        </div>
+        <AvatarInput value={avatar} setValue={setAvatar} />
         <div className={s['animal-form__props']}>
           <div className={s['animal-form__prop']}>
             <label className={s['animal-form__prop-name']}>Name</label>
@@ -190,30 +128,7 @@ const AnimalForm: FC = () => {
       </div>
       <div>
         <h2>Add more photos</h2>
-        <div className={s['animal-form__more-photos']}>
-          <label htmlFor={otherPhotosInputId} className={s['animal-form__more-photos-input']}>
-            <FontAwesomeIcon icon={plusIcon} size="4x" />
-          </label>
-          {otherPhotosUrls.map((url, index) => (
-            <div key={url + index} className={s['animal-form__more-photo']}>
-              <img src={url} />
-              <div className={s['animal-form__more-photo-remove']}>
-                <Button as="a" onClick={(e) => removeOtherPhotoHandler(index)} round>
-                  <FontAwesomeIcon icon={crossIcon} />
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ visibility: 'hidden', display: 'none', opacity: 0 }}>
-          <Input
-            ref={otherPhotosInputRef}
-            multiple
-            type="file"
-            htmlId={otherPhotosInputId}
-            onChange={otherPhotosChangeHandler}
-          />
-        </div>
+        <MorePhotosInput value={otherPhotos} setValue={setOtherPhotos} />
       </div>
 
       <div className={s['animal-form__buttons']}>

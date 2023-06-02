@@ -10,7 +10,10 @@ $themes: (
     lighter-color: #6bd3d3,
     shadow-color: #1d8989,
     placeholder-color: #dfdfdf,
-    second-color-filter: invert(27%) sepia(96%) saturate(3030%) hue-rotate(164deg) brightness(87%) contrast(83%),
+    second-color-filter: brightness(0) invert(27%) sepia(96%) saturate(3030%) hue-rotate(164deg) brightness(87%)
+      contrast(83%),
+    light-color-filter: brightness(0) invert(94%) sepia(50%) saturate(7061%) hue-rotate(135deg) brightness(87%)
+      contrast(88%),
   ),
   dark: (
     text-main-color: #ebeef7,
@@ -23,6 +26,9 @@ $themes: (
     lighter-color: #8d6dd7,
     shadow-color: #350f8e,
     placeholder-color: #dadada,
-    second-color-filter: invert(16%) sepia(46%) saturate(3522%) hue-rotate(247deg) brightness(88%) contrast(91%),
+    second-color-filter: brightness(0) invert(16%) sepia(46%) saturate(3522%) hue-rotate(247deg) brightness(88%)
+      contrast(91%),
+    light-color-filter: brightness(0) invert(30%) sepia(72%) saturate(3494%) hue-rotate(246deg) brightness(89%)
+      contrast(89%),
   ),
 );

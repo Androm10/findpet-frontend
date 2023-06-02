@@ -1,0 +1,22 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.user-profile-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile-menu__item {
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+  @include theme-aware('background', 'main-color');
+
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'second-color');
+  }
+}
+
+.user-profile-menu__item + .user-profile-menu__item {
+  @include theme-aware-shadow(1px, 0, 0, 0, 'third-color');
+}

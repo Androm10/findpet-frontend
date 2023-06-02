@@ -1,0 +1,10 @@
+.chatbot-message-list {
+  padding: 10px;
+
+  & .chatbot-message-list__item + .chatbot-message-list__item {
+    margin-top: 20px;
+  }
+}
+
+.chatbot-message-list__item {
+}

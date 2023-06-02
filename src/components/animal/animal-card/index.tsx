@@ -27,7 +27,8 @@ const AnimalCard: FC<AnimalCardProps> = (props: AnimalCardProps) => {
               {name} <FontAwesomeIcon icon={getAnimalTypeIcon(type)} />
             </label>
             <label className={s['animal-card__info-params']}>
-              {sex == 'G' ? 'G' : 'M'}, {age} {age === 1 ? 'год' : age > 4 ? 'лет' : 'года'}
+              {sex == 'G' ? 'Girl' : 'Boy'}, {age} months
+              {/* {age === 1 ? 'год' : age > 4 ? 'лет' : 'года'} */}
             </label>
           </div>
         </div>

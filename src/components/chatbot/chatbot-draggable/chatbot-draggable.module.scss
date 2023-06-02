@@ -1,0 +1,33 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.chatbot-draggable__icon {
+  &:hover {
+    cursor: pointer;
+  }
+  &_active {
+    @include theme-aware('color', 'light-color');
+  }
+}
+
+.chatbot-draggable__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatbot-draggable__header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  @include theme-aware('background', 'main-color');
+  &:hover {
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.chatbot-draggable__draggable {
+  width: 100%;
+}

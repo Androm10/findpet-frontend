@@ -24,10 +24,12 @@
 .shelter-page__photos {
   display: flex;
   flex: 50%;
+  flex-shrink: 0;
 
   @include lg {
     flex: 40%;
     flex-grow: 0;
+    flex-shrink: 0;
   }
 
   flex-direction: column;
@@ -118,11 +120,14 @@
   }
 }
 
+$animals-height: 400px;
+$animals-padding: 10px;
+
 .shelter-page__animals-view {
   overflow-y: scroll;
-  height: 400px;
+  height: $animals-height;
   outline: 5px solid;
-  padding: 10px;
+  padding: $animals-padding;
   box-sizing: border-box;
   border-radius: 20px;
   @include theme-aware('outline-color', 'light-color');
@@ -141,6 +146,7 @@
 .shelter-page__add-animal {
   border-radius: 20px;
   height: 100%;
+  max-height: calc($animals-height - (2 * $animals-padding));
   @include theme-aware('background', 'light-color');
   color: #fff;
   display: flex;

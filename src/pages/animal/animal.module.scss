@@ -65,6 +65,10 @@
   gap: 20px;
 }
 
+.animal-page__shelter-data + .animal-page__shelter-data {
+  margin-top: 20px;
+}
+
 .animal-page__paw {
   position: absolute;
   z-index: 1;

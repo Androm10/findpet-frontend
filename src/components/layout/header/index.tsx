@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Themes } from '@shared/constants/themes';
 import { useAppTheme } from '@shared/hooks/use-theme';
-import { ForwardedRef, forwardRef, memo, SyntheticEvent, useEffect, useRef, useState, MouseEvent } from 'react';
+import { ForwardedRef, forwardRef, memo, useEffect, useRef, useState, MouseEvent } from 'react';
 import s from './header.module.scss';
 import {
   whiteMoonIcon,
@@ -11,11 +11,9 @@ import {
   crossIcon,
   homeIcon,
   petsIcon,
-  devIcon,
   searchIcon,
   sheltersIcon,
   plusIcon,
-  userIcon,
   editIcon,
 } from '@shared/font-awesome-icons';
 import FlexContainer from 'components/containers/flex-container';
@@ -30,13 +28,14 @@ import { useAppSelector } from '@shared/hooks/app-selector.hook';
 import Avatar from '@ui/avatar';
 import { useAppDispatch } from '@shared/hooks/app-dispatch.hook';
 import { animalsFilterActions } from '@shared/store/slices/animals-filter.slice';
+import ChatbotDraggable from 'components/chatbot/chatbot-draggable';
 import FloatingMenu from '@ui/floating-menu';
-import ChatbotWindow from 'components/chatbot/chatbot-window';
+import UserProfileMenu from 'components/user/user-profile-menu';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
   const [isMenu, setMenu] = useState(false);
-  const [isBotHidden, setBotHidden] = useState(false);
+  const [isUserMenu, setUserMenu] = useState(true);
   const { user } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -77,7 +76,7 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
   return (
     <>
       <FlexContainer ref={ref} className={s.header}>
-        <div>
+        <div className={s['header__logo']}>
           <img src={logo} height="50" />
         </div>
 
@@ -90,13 +89,18 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
                     <FontAwesomeIcon icon={sheltersIcon} />
                   </Link>
                 )}
-                <FloatingMenu element={<ChatbotWindow />} isHidden={isBotHidden} setHidden={setBotHidden}>
-                  <FontAwesomeIcon icon={userIcon} onClick={() => setBotHidden(false)} />
-                </FloatingMenu>
+                <ChatbotDraggable />
               </div>
-              <div className={s.header__user}>
-                {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />{' '}
-              </div>
+              <FloatingMenu
+                marginTop="70px"
+                element={<UserProfileMenu />}
+                isHidden={isUserMenu}
+                setHidden={setUserMenu}
+              >
+                <div className={s.header__user} onClick={() => setUserMenu(!isUserMenu)}>
+                  {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />
+                </div>
+              </FloatingMenu>
             </div>
           ) : (
             <Link to={routes.login}>
@@ -178,11 +182,7 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
             <FontAwesomeIcon icon={homeIcon} /> HOME
           </div>
         </Link>
-        <Link to={routes.dev} className={s.header__link}>
-          <div className={s['header__menu-item']}>
-            <FontAwesomeIcon icon={devIcon} /> DEV
-          </div>
-        </Link>
+
         <Link to={routes.pets} className={s.header__link}>
           <div className={s['header__menu-item']}>
             <FontAwesomeIcon icon={petsIcon} /> PETS

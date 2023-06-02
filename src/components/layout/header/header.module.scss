@@ -21,6 +21,12 @@
   width: fit-content;
 }
 
+.header__logo {
+  img {
+    @include theme-aware('filter', 'light-color-filter');
+  }
+}
+
 .header__navigation {
   display: flex;
   gap: 20px;
@@ -45,6 +51,18 @@
   gap: 10px;
   font-size: $font-size-m;
   align-items: center;
+  border-radius: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: background 0.1s ease;
+  &:hover {
+    cursor: pointer;
+    @include theme-aware('background', 'second-color');
+  }
+
+  &:active {
+    @include theme-aware('background', 'third-color');
+  }
 }
 
 .header__menu-button {
