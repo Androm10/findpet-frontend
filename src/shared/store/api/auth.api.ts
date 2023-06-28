@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { JwtService } from '@shared/services/jwt.service';
 import { UserEntity } from 'core/entities/user.entity';
+import { userActions } from '../slices/user.slice';
 import customBaseQuery from './base-query';
+import { chatApi } from './chat.api';
 import { userApi } from './user.api';
 
 export const authApi = createApi({
@@ -32,7 +34,9 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           JwtService.setAccessToken(data.accessToken);
           JwtService.setRefreshToken(data.refreshToken);
+          dispatch(userActions.setAuth(true));
           await dispatch(userApi.endpoints.getMe.initiate(undefined));
+          await dispatch(chatApi.endpoints.getChats.initiate(undefined));
         } catch (error) {}
       },
     }),

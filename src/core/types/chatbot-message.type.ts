@@ -1,4 +1,4 @@
-export type Message = {
+export type ChatbotMessage = {
   isBot: boolean;
   text: string;
   date: Date;

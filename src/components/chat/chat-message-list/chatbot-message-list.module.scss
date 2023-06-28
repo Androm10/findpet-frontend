@@ -1,0 +1,10 @@
+.chat-message-list {
+  padding: 10px;
+
+  & .chat-message-list__item + .chat-message-list__item {
+    margin-top: 20px;
+  }
+}
+
+.chat-message-list__item {
+}

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '@shared/constants/api';
 import { UserEntity } from 'core/entities/user.entity';
+import { Photo } from 'core/types/photo.type';
 import { userActions } from '../slices/user.slice';
 import customBaseQuery from './base-query';
 
@@ -17,6 +18,7 @@ export const userApi = createApi({
           dispatch(userActions.setUser(data));
         } catch (error) {}
       },
+      providesTags: ['User'],
     }),
 
     getUser: builder.query<UserEntity, number>({
@@ -35,9 +37,17 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    updateAvatar: builder.mutation<Photo, UpdateAvatar>({
+      query: ({ formData }) => ({
+        url: `user/profile/avatar`,
+        method: 'PUT',
+        body: formData,
+      }),
+      invalidatesTags: ['User'],
+    }),
     updateUser: builder.mutation<UserEntity, UpdateUser>({
-      query: ({ id, ...data }) => ({
-        url: `user/${id}`,
+      query: ({ ...data }) => ({
+        url: `user/profile`,
         method: 'PUT',
         body: data,
       }),
@@ -60,6 +70,7 @@ export const {
   useDeleteUserMutation,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useUpdateAvatarMutation,
 } = userApi;
 
 type CreateUser = {
@@ -68,8 +79,11 @@ type CreateUser = {
   password: string;
 };
 
+type UpdateAvatar = {
+  formData: FormData;
+};
+
 type UpdateUser = {
   username?: string;
   login?: string;
-  id: string;
 };

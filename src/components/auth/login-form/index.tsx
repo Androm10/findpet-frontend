@@ -40,7 +40,7 @@ const LoginForm: FC = () => {
           className={s['login-form__input']}
         />
       </div>
-      <div className={s['login-form__errors']}>{isError && <div>{(error as any).data.message}</div>}</div>
+      {/* <div className={s['login-form__errors']}>{isError && <div>{(error as any).data.message}</div>}</div> */}
 
       <Button
         onClick={() => loginHandler({ login, password })}

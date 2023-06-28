@@ -7,4 +7,6 @@ export type UserEntity = {
   username: string;
   password: string;
   avatar?: Photo;
+  isOnline: boolean;
+  lastOnlineDate: Date;
 };

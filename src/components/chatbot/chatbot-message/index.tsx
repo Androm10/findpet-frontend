@@ -1,10 +1,10 @@
 import { classNames } from '@shared/utils/class-names';
-import { Message } from 'core/types/chatbot-message.type';
+import { ChatbotMessage as ChatbotMessageType } from 'core/types/chatbot-message.type';
 import { FC } from 'react';
 import s from './chatbot-message.module.scss';
 
 interface ChatbotMessageProps {
-  message: Message;
+  message: ChatbotMessageType;
 }
 
 const ChatbotMessage: FC<ChatbotMessageProps> = (props: ChatbotMessageProps) => {

@@ -1,0 +1,55 @@
+@import '../../../scss/mixins/theme-aware.scss';
+
+.chat-message {
+  display: flex;
+  justify-content: flex-end;
+
+  &_bot {
+    justify-content: flex-start;
+
+    .chat-message__container {
+      @include theme-aware('background', 'second-color');
+      border-radius: 10px 10px 10px 0;
+      &::after {
+        left: -10px;
+        @include theme-aware('border-color', 'second-color');
+        border-bottom: 10px solid red;
+        border-left: 10px solid transparent !important;
+        border-right: 0;
+      }
+    }
+  }
+}
+
+.chat-message__container {
+  padding: 10px;
+  color: #fff;
+  border-radius: 10px 10px 0 10px;
+  max-width: 80%;
+  hyphens: auto;
+  word-break: break-word;
+  @include theme-aware('background', 'light-color');
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    display: block;
+    width: 0;
+    height: 0;
+    // background: inherit;
+    @include theme-aware('border-color', 'light-color');
+    border-bottom: 10px solid red;
+    border-right: 10px solid transparent !important;
+
+    // background: inherit;
+  }
+}
+
+.chat-message__text {
+}
+
+.chat-message__date {
+  display: block;
+}

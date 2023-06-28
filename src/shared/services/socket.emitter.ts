@@ -4,8 +4,12 @@ import io, { ManagerOptions, SocketOptions, Socket } from 'socket.io-client';
 export class SocketEmitter {
   clientSocket: Socket | null = null;
 
-  constructor(connectionUrl: string, options?: Partial<ManagerOptions & SocketOptions>) {
-    this.clientSocket = io(connectionUrl, options);
+  constructor(private connectionUrl: string, private options?: Partial<ManagerOptions & SocketOptions>) {
+    // this.clientSocket = io(connectionUrl, options);
+  }
+
+  public connect() {
+    this.clientSocket = io(this.connectionUrl, this.options);
   }
 
   public subscribe(event: string, callback: (...args: any) => void): this {

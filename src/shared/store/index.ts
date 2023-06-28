@@ -8,6 +8,8 @@ import { userApi } from './api/user.api';
 import { animalsFilterReducer } from './slices/animals-filter.slice';
 import { themeReducer } from './slices/theme.slice';
 import { userReducer } from './slices/user.slice';
+import { chatReducer } from './slices/chat.slice';
+import { chatApi } from './api/chat.api';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -15,9 +17,11 @@ export const store = configureStore({
     [animalApi.reducerPath]: animalApi.reducer,
     [shelterApi.reducerPath]: shelterApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [chatApi.reducerPath]: chatApi.reducer,
     themeReducer,
     userReducer,
     animalsFilterReducer,
+    chatReducer,
   }),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -25,6 +29,7 @@ export const store = configureStore({
       animalApi.middleware,
       shelterApi.middleware,
       authApi.middleware,
+      chatApi.middleware,
     ]),
 });
 

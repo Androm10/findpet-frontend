@@ -13,6 +13,7 @@ export const useChatbot = (url: string) => {
       {
         isBot: true,
         text: message,
+        date: new Date(),
       },
     ]);
   };
@@ -33,7 +34,12 @@ export const useChatbot = (url: string) => {
 
   useEffect(() => {
     if (url) {
-      setEmitter(new SocketEmitter(url));
+      if (emitter) {
+        emitter.closeConnection();
+      }
+      const socketEmitter = new SocketEmitter(url);
+      socketEmitter.connect();
+      setEmitter(socketEmitter);
     }
   }, [url]);
 
@@ -42,7 +48,6 @@ export const useChatbot = (url: string) => {
       setConnected(false);
       return;
     }
-    console.log('truuueee');
     setConnected(true);
     emitter.subscribe('message', messageHandler);
 

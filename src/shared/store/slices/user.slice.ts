@@ -4,11 +4,13 @@ import { Coords } from 'core/types/coords.type';
 
 interface UserState {
   user: UserEntity | null;
+  isAuth: boolean;
   location: Coords | null;
 }
 
 const initialState: UserState = {
   user: null,
+  isAuth: false,
   location: null,
 };
 
@@ -21,6 +23,9 @@ export const userSlice = createSlice({
     },
     setLocation(state, action: PayloadAction<Coords | null>) {
       state.location = action.payload;
+    },
+    setAuth(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload;
     },
   },
 });
