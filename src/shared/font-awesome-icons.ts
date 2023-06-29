@@ -10,6 +10,8 @@ export const userIcon = icon({ name: 'user' });
 export const burgerIcon = icon({ name: 'bars' });
 export const crossIcon = icon({ name: 'xmark' });
 export const circleIcon = icon({ name: 'circle' });
+export const chatIcon = icon({ name: 'message' });
+export const logoutIcon = icon({ name: 'arrow-right-from-bracket' });
 
 export const catIcon = icon({ name: 'cat' });
 export const dogIcon = icon({ name: 'dog' });

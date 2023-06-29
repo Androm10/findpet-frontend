@@ -16,6 +16,7 @@ export const userApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(userActions.setUser(data));
+          dispatch(userActions.setAuth(true));
         } catch (error) {}
       },
       providesTags: ['User'],
@@ -65,6 +66,7 @@ export const userApi = createApi({
 
 export const {
   useGetMeQuery,
+  useLazyGetMeQuery,
   useGetUsersQuery,
   useGetUserQuery,
   useDeleteUserMutation,

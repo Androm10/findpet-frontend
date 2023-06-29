@@ -15,6 +15,7 @@ import {
   sheltersIcon,
   plusIcon,
   editIcon,
+  chatIcon,
 } from '@shared/font-awesome-icons';
 import FlexContainer from 'components/containers/flex-container';
 import Button from '@ui/button';
@@ -31,11 +32,14 @@ import { animalsFilterActions } from '@shared/store/slices/animals-filter.slice'
 import ChatbotDraggable from 'components/chatbot/chatbot-draggable';
 import FloatingMenu from '@ui/floating-menu';
 import UserProfileMenu from 'components/user/user-profile-menu';
+import ChatPanel from 'components/chat/chat-panel';
 
 const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<HTMLDivElement>) => {
   const [theme, setTheme] = useAppTheme();
   const [isMenu, setMenu] = useState(false);
   const [isUserMenu, setUserMenu] = useState(true);
+  const [isChatMenu, setChatMenu] = useState(true);
+
   const { user } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -91,6 +95,11 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
                 )}
                 <ChatbotDraggable />
               </div>
+              <FloatingMenu marginTop="20px" element={<ChatPanel />} isHidden={isChatMenu} setHidden={setChatMenu}>
+                <div className={s['header__user-property']} onClick={() => setChatMenu(!isChatMenu)}>
+                  <FontAwesomeIcon icon={chatIcon} />
+                </div>
+              </FloatingMenu>
               <FloatingMenu
                 marginTop="70px"
                 element={<UserProfileMenu />}
@@ -98,7 +107,7 @@ const LayoutHeader = forwardRef<HTMLDivElement, any>((props, ref: ForwardedRef<H
                 setHidden={setUserMenu}
               >
                 <div className={s.header__user} onClick={() => setUserMenu(!isUserMenu)}>
-                  {user.login} <Avatar url={user.avatar.url} label={user.login[0]} />
+                  {user.login} <Avatar url={user?.avatar?.url} label={user.login[0]} />
                 </div>
               </FloatingMenu>
             </div>

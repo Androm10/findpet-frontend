@@ -10,7 +10,9 @@ export const useSocket = () => {
   const { isAuth, user } = useAppSelector((state) => state.userReducer);
 
   useEffect(() => {
+    console.log('useSocket', isAuth);
     if (isAuth) {
+      console.log(SOCKET_URL);
       const socketEmitter = new SocketEmitter(SOCKET_URL, {
         transportOptions: {
           polling: {

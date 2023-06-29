@@ -1,5 +1,6 @@
-import { CHATBOT_URL } from '@shared/constants/api';
+import { CHATBOT_URL, SOCKET_URL } from '@shared/constants/api';
 import io, { ManagerOptions, SocketOptions, Socket } from 'socket.io-client';
+import { JwtService } from './jwt.service';
 
 export class SocketEmitter {
   clientSocket: Socket | null = null;
@@ -9,6 +10,7 @@ export class SocketEmitter {
   }
 
   public connect() {
+    console.log(this.connectionUrl, this.options);
     this.clientSocket = io(this.connectionUrl, this.options);
   }
 

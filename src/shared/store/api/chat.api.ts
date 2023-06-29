@@ -8,7 +8,7 @@ export const chatApi = createApi({
   baseQuery: customBaseQuery,
   tagTypes: ['Chat'],
   endpoints: (builder) => ({
-    getChats: builder.query<ChatEntity[], undefined>({
+    getChats: builder.query<ChatEntity[], void>({
       query: () => `chat/userChats`,
       providesTags: ['Chat'],
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {

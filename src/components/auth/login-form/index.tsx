@@ -1,8 +1,10 @@
+import { BASE_URL } from '@shared/constants/api';
 import { routes } from '@shared/constants/routes';
 import { useLoginMutation } from '@shared/store/api/auth.api';
 import Button from '@ui/button';
 import Input from '@ui/input';
 import Spinner from '@ui/spinner';
+import GoogleSvg from '@ui/svg/google-svg';
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import s from './login-form.module.scss';
@@ -41,7 +43,13 @@ const LoginForm: FC = () => {
         />
       </div>
       {/* <div className={s['login-form__errors']}>{isError && <div>{(error as any).data.message}</div>}</div> */}
-
+      <div className={s['login-form__stats']}>
+        <Button as="a" round size="medium" href={`${BASE_URL}/auth/google`}>
+          <div>
+            <GoogleSvg />
+          </div>
+        </Button>
+      </div>
       <Button
         onClick={() => loginHandler({ login, password })}
         size="medium"
